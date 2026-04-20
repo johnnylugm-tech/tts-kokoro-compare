@@ -184,8 +184,9 @@ async def health_check():
                 KOKORO_VOICES_URL,
             )
             backend_reachable = response.status_code == 200
-    except Exception:
-        pass
+    except httpx.HTTPError as e:
+        logger.warning(f"Health check failed: {e}")
+        backend_reachable = False
     
     return {
         "status": "ok" if backend_reachable else "degraded",

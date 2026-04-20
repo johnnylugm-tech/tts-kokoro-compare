@@ -111,6 +111,66 @@ class SSMLParser:
             return "......"
 
     @classmethod
+    def _process_break(cls, element: ET.Element, current_speed: float) -> SSMLSegment | None:
+        """Process <break> element."""
+        time_attr = element.get("time", "")
+        pause_chars = cls._parse_time_to_chars(time_attr)
+        if pause_chars:
+            return SSMLSegment(text="", pause_chars=pause_chars, speed=current_speed)
+        return None
+
+    @classmethod
+    def _process_prosody(cls, element: ET.Element, default_speed: float, depth: int) -> tuple[float, List[SSMLSegment]]:
+        """Process <prosody> element. Returns (adjusted_speed, child_segments)."""
+        rate_attr = element.get("rate", None)
+        current_speed = default_speed
+        if rate_attr:
+            try:
+                if rate_attr in ("slow", "fast", "medium"):
+                    speed_map = {"slow": 0.8, "medium": 1.0, "fast": 1.2}
+                    current_speed = speed_map.get(rate_attr, default_speed)
+                else:
+                    current_speed = float(rate_attr)
+            except ValueError:
+                logger.warning(f"Invalid prosody rate: {rate_attr}")
+                current_speed = default_speed
+        if element.get("pitch"):
+            logger.warning("pitch attribute not supported, ignoring")
+        if element.get("volume"):
+            logger.warning("volume attribute not supported, ignoring")
+        child_segments = cls._process_element(element, current_speed, depth + 1)
+        return current_speed, child_segments
+
+    @classmethod
+    def _process_emphasis(cls, element: ET.Element, current_speed: float, depth: int) -> List[SSMLSegment]:
+        """Process <emphasis> element."""
+        level_attr = element.get("level", "moderate")
+        if level_attr == "strong":
+            emphasis_speed = current_speed * 1.15
+        elif level_attr == "none":
+            emphasis_speed = current_speed
+        else:
+            emphasis_speed = current_speed * 1.1
+        return cls._process_element(element, emphasis_speed, depth + 1)
+
+    @classmethod
+    def _process_phoneme(cls, element: ET.Element, current_speed: float) -> SSMLSegment | None:
+        """Process <phoneme> element."""
+        phoneme_text = element.text or ""
+        if phoneme_text:
+            return SSMLSegment(text=phoneme_text, speed=current_speed)
+        return None
+
+    @classmethod
+    def _process_voice(cls, element: ET.Element, current_speed: float, depth: int) -> List[SSMLSegment]:
+        """Process <voice> element."""
+        voice_name = element.get("name") or element.get("voice") or None
+        child_segments = cls._process_element(element, current_speed, depth + 1)
+        for seg in child_segments:
+            seg.voice = voice_name
+        return child_segments
+
+    @classmethod
     def _process_element(cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0) -> List[SSMLSegment]:
         """
         Recursively process an XML element and its children.
@@ -136,86 +196,29 @@ class SSMLParser:
             tag_lower = child.tag.lower()
             
             if tag_lower == "break":
-                # Handle break element
-                time_attr = child.get("time", "")
-                pause_chars = cls._parse_time_to_chars(time_attr)
-                
-                if pause_chars:
-                    # Create a pause segment
-                    segments.append(SSMLSegment(text="", pause_chars=pause_chars, speed=current_speed))
-            
+                seg = cls._process_break(child, current_speed)
+                if seg:
+                    segments.append(seg)
             elif tag_lower == "prosody":
-                # Handle prosody element
-                rate_attr = child.get("rate", None)
-                
-                # Parse speed adjustment
-                if rate_attr:
-                    try:
-                        # rate can be "slow", "fast", "medium" or multiplier like "0.9", "1.2"
-                        if rate_attr in ("slow", "fast", "medium"):
-                            speed_map = {"slow": 0.8, "medium": 1.0, "fast": 1.2}
-                            current_speed = speed_map.get(rate_attr, default_speed)
-                        else:
-                            current_speed = float(rate_attr)
-                    except ValueError:
-                        logger.warning(f"Invalid prosody rate: {rate_attr}")
-                        current_speed = default_speed
-                
-                # Warn about unsupported attributes
-                if child.get("pitch"):
-                    logger.warning("pitch attribute not supported, ignoring")
-                if child.get("volume"):
-                    logger.warning("volume attribute not supported, ignoring")
-                
-                # Process children with adjusted speed
-                child_segments = cls._process_element(child, current_speed, depth + 1)
+                _, child_segments = cls._process_prosody(child, current_speed, depth)
                 segments.extend(child_segments)
-            
             elif tag_lower == "emphasis":
-                # Handle emphasis element
-                level_attr = child.get("level", "moderate")
-                
-                # Adjust speed based on emphasis level
-                if level_attr == "strong":
-                    emphasis_speed = current_speed * 1.15
-                elif level_attr == "moderate":
-                    emphasis_speed = current_speed * 1.1
-                elif level_attr == "none":
-                    emphasis_speed = current_speed
-                else:
-                    emphasis_speed = current_speed * 1.1
-                
-                # Process children with emphasis
-                child_segments = cls._process_element(child, emphasis_speed, depth + 1)
+                child_segments = cls._process_emphasis(child, current_speed, depth)
                 segments.extend(child_segments)
-            
             elif tag_lower == "phoneme":
-                # Preserve phoneme content (IPA notation)
-                phoneme_text = child.text or ""
-                if phoneme_text:
-                    segments.append(SSMLSegment(text=phoneme_text, speed=current_speed))
-            
+                seg = cls._process_phoneme(child, current_speed)
+                if seg:
+                    segments.append(seg)
             elif tag_lower == "voice":
-                # Handle voice element - switch to specified voice
-                voice_name = child.get("name") or child.get("voice") or None
-                
-                # Process children with potentially different voice
-                child_segments = cls._process_element(child, current_speed, depth + 1)
-                for seg in child_segments:
-                    seg.voice = voice_name
+                child_segments = cls._process_voice(child, current_speed, depth)
                 segments.extend(child_segments)
-            
             elif tag_lower == "speak":
-                # Root element, process children
                 child_segments = cls._process_element(child, default_speed, depth + 1)
                 segments.extend(child_segments)
-            
             else:
-                # Unknown tag, extract text content
                 if child.text:
                     segments.append(SSMLSegment(text=child.text.strip(), speed=current_speed))
             
-            # Handle tail text (text after the child element)
             if child.tail and child.tail.strip():
                 tail_text = child.tail.strip()
                 if tail_text:
