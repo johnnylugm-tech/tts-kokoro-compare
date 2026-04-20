@@ -99,7 +99,7 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
     except subprocess.SubprocessError as e:
         logger.error(f"Subprocess error during conversion: {e}")
         return False
-    except Exception as e:
+    except (RuntimeError, subprocess.SubprocessError, OSError) as e:
         logger.error(f"Unexpected error during conversion: {e}")
         return False
 
@@ -148,7 +148,7 @@ def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k")
         
         return True
         
-    except Exception as e:
+    except (RuntimeError, subprocess.SubprocessError, OSError) as e:
         logger.error(f"Unexpected error during WAV->MP3 conversion: {e}")
         return False
 
@@ -209,6 +209,6 @@ def get_audio_info(file_path: str) -> Optional[dict]:
         
         return info
         
-    except Exception as e:
+    except (RuntimeError, subprocess.SubprocessError, OSError) as e:
         logger.debug(f"Could not get audio info: {e}")
         return None

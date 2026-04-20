@@ -250,7 +250,7 @@ async def main_async(args: argparse.Namespace) -> int:
     except ValueError as e:
         logger.error(f"Input error: {e}")
         return 1
-    except Exception as e:
+    except (ValueError, IOError, OSError) as e:
         logger.error(f"Synthesis error: {e}", exc_info=True)
         return 1
 

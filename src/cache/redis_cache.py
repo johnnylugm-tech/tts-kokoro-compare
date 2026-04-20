@@ -98,7 +98,7 @@ class RedisCache:
             else:
                 logger.debug(f"Cache miss: {key}")
                 return None
-        except Exception as e:
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache get error: {e}")
             return None
     
@@ -135,7 +135,7 @@ class RedisCache:
             )
             logger.debug(f"Cached: {key} ({len(audio)} bytes)")
             return True
-        except Exception as e:
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache set error: {e}")
             return False
     
@@ -159,7 +159,7 @@ class RedisCache:
             key = self._generate_key(text, voice, speed, model)
             self._client.delete(key)
             return True
-        except Exception as e:
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache delete error: {e}")
             return False
     
@@ -179,7 +179,7 @@ class RedisCache:
             if keys:
                 return self._client.delete(*keys)
             return 0
-        except Exception as e:
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache clear error: {e}")
             return 0
     

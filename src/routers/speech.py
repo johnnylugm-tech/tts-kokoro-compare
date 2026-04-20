@@ -228,7 +228,7 @@ async def list_voices() -> dict:
             response.raise_for_status()
             voices = response.json()
             return {"voices": voices}
-    except Exception as e:
+    except (httpx.HTTPError, httpx.TimeoutException, OSError) as e:
         logger.error(f"Failed to fetch voices: {e}")
         # Return default voices as fallback
         return {
