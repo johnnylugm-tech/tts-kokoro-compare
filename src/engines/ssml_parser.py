@@ -3,7 +3,7 @@
 import re
 import logging
 import xml.etree.ElementTree as ET
-from typing import Dict, List, Optional, Any
+from typing import List, Optional
 from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
@@ -255,7 +255,7 @@ class SSMLParser:
                 # Find first tag
                 first_tag_match = re.match(r"<(\w+)", cleaned_stripped)
                 if first_tag_match:
-                    tag_name = first_tag_match.group(1)
+                    _ = first_tag_match.group(1)  # extract tag name but don't use
                     cleaned = f"<speak>{cleaned}</speak>"
                 else:
                     cleaned = f"<speak>{cleaned}</speak>"

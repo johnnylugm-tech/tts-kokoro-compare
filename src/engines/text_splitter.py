@@ -2,7 +2,7 @@
 
 import re
 import logging
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
@@ -45,7 +45,7 @@ class TextSplitter:
         self.max_chars = max_chars
         self.optimal_min, self.optimal_max = optimal_range
 
-    def split(self, text: str, max_chars: int = None) -> List[str]:
+    def split(self, text: str, max_chars: Optional[int] = None) -> List[str]:
         """
         Split text into segments respecting the maximum character limit.
         
@@ -80,7 +80,7 @@ class TextSplitter:
         
         return final_segments
 
-    def split_semantic(self, text: str, max_chars: int = None) -> List[str]:
+    def split_semantic(self, text: str, max_chars: Optional[int] = None) -> List[str]:
         """
         Split text using 3-level recursive semantic segmentation.
         

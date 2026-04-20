@@ -3,10 +3,9 @@
 import logging
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Response, Request
-from fastapi.responses import StreamingResponse
+from fastapi import APIRouter, HTTPException, Response
 
-from ..models import SpeechRequest, SpeechResponse
+from ..models import SpeechRequest
 from ..config import (
     DEFAULT_VOICE,
     DEFAULT_SPEED,
@@ -165,16 +164,17 @@ async def generate_speech(request: SpeechRequest) -> Response:
         
         # Synthesize using circuit breaker
         try:
+            audio_data: bytes
             if is_ssml:
                 audio_data = await circuit_breaker.call_async(
-                    engine.synthesize_ssml,
+                    engine.synthesize_ssml,  # type: ignore[arg-type]
                     request.input,
                     voice,
                     speed,
                 )
             else:
                 audio_data = await circuit_breaker.call_async(
-                    engine.synthesize_text,
+                    engine.synthesize_text,  # type: ignore[arg-type]
                     request.input,
                     voice,
                     speed,

@@ -1,7 +1,6 @@
 """Kokoro Taiwan Proxy - FastAPI Application."""
 
 import logging
-import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request

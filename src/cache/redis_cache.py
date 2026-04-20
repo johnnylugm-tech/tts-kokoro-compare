@@ -1,10 +1,16 @@
 """Redis Cache - optional audio caching layer."""
 
 import hashlib
-import json
 import logging
-from typing import Optional, Any
+from typing import Optional
 from dataclasses import dataclass
+
+try:
+    import redis
+except ImportError:
+    redis = None  # type: ignore
+
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +43,7 @@ class RedisCache:
             config: Cache configuration
         """
         self.config = config or CacheConfig()
-        self._client = None
+        self._client: Any = None  # type: ignore[assignment]
         self._connected = False
         
         if self.config.enabled:
