@@ -67,7 +67,7 @@ async def warmup_backend() -> bool:
             )
             return True
             
-    except Exception as e:
+    except (httpx.HTTPError, httpx.TimeoutException, OSError) as e:
         logger.warning(f"Warmup failed: {e}")
         return False
 

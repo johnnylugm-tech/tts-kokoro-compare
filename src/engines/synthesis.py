@@ -108,8 +108,11 @@ class SynthesisEngine:
         except httpx.HTTPStatusError as e:
             logger.error(f"HTTP error {e.response.status_code}: {e.response.text}")
             raise
-        except Exception as e:
-            logger.error(f"Synthesis error: {e}")
+        except httpx.HTTPError as e:
+            logger.error(f"HTTP error during synthesis: {e}")
+            raise
+        except (ValueError, IOError, OSError) as e:
+            logger.error(f"Unexpected error during synthesis: {e}")
             raise
 
     async def synthesize_segments(
@@ -201,11 +204,11 @@ class SynthesisEngine:
         for attempt in range(max_retries + 1):
             try:
                 return await self.synthesize(text, voice, speed, model)
-            except Exception as e:
-                last_error = e
+            except (ValueError, IOError, OSError, httpx.HTTPError) as synth_err:
+                last_error = synth_err
                 if attempt < max_retries:
                     wait_time = 2 ** attempt * 0.5
-                    logger.warning(f"Retry {attempt + 1}/{max_retries} after {wait_time}s: {e}")
+                    logger.warning(f"Retry {attempt + 1}/{max_retries} after {wait_time}s: {synth_err}")
                     await asyncio.sleep(wait_time)
         
         raise last_error or RuntimeError("Synthesis failed")

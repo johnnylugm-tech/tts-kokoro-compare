@@ -61,7 +61,7 @@ class RedisCache:
         except ImportError:
             logger.warning("redis package not installed, cache disabled")
             self._connected = False
-        except Exception as e:
+        except (ValueError, IOError, OSError) as e:
             logger.warning(f"Redis connection failed: {e}, cache disabled")
             self._connected = False
     

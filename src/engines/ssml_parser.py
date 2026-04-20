@@ -291,7 +291,7 @@ class SSMLParser:
         except ET.ParseError as e:
             logger.warning(f"SSML parsing failed, falling back to plain text: {e}")
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
-        except Exception as e:
+        except (ET.ParseError, ValueError, OSError) as e:
             logger.error(f"Unexpected error parsing SSML: {e}")
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
 
