@@ -117,10 +117,8 @@ async def generate_speech(request: SpeechRequest) -> Response:
 
     # Log request
     logger.info(
-        f"Speech request: model={request.model}, "
-        f"input_len={len(request.input)}, "
-        f"voice={request.voice}, "
-        f"speed={request.speed}"
+        "Speech request: model=%s, input_len=%s, voice=%s, speed=%s",
+        request.model, len(request.input), request.voice, request.speed
     )
 
     # Validate input
@@ -198,7 +196,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
             audio=audio_data,
         )
 
-        logger.info(f"Generated audio: {len(audio_data)} bytes")
+        logger.info("Generated audio: %s bytes", len(audio_data))
 
         return Response(
             content=audio_data,
@@ -209,7 +207,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Speech synthesis error: {e}", exc_info=True)
+        logger.error("Speech synthesis error: %s", e, exc_info=True)
         raise HTTPException(status_code=500, detail=f"Synthesis failed: {str(e)}")
 
 
@@ -229,7 +227,7 @@ async def list_voices() -> dict:
             voices = response.json()
             return {"voices": voices}
     except (httpx.HTTPError, httpx.TimeoutException, OSError) as e:
-        logger.error(f"Failed to fetch voices: {e}")
+        logger.error("Failed to fetch voices: %s", e)
         # Return default voices as fallback
         return {
             "voices": [

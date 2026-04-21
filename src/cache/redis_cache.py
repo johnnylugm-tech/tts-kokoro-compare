@@ -63,12 +63,12 @@ class RedisCache:
             # Test connection
             self._client.ping()
             self._connected = True
-            logger.info(f"Redis cache connected: {self.config.host}:{self.config.port}")
+            logger.info("Redis cache connected: %s:%s", self.config.host, self.config.port)
         except ImportError:
             logger.warning("redis package not installed, cache disabled")
             self._connected = False
         except (ValueError, IOError, OSError) as e:
-            logger.warning(f"Redis connection failed: {e}, cache disabled")
+            logger.warning("Redis connection failed: %s, cache disabled", e)
             self._connected = False
 
     def _generate_key(self, text: str, voice: str, speed: float, model: str) -> str:
@@ -99,13 +99,13 @@ class RedisCache:
             result = self._client.get(key)
 
             if result:
-                logger.debug(f"Cache hit: {key}")
+                logger.debug("Cache hit: %s", key)
                 return result
             else:
-                logger.debug(f"Cache miss: {key}")
+                logger.debug("Cache miss: %s", key)
                 return None
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
-            logger.warning(f"Cache get error: {e}")
+            logger.warning("Cache get error: %s", e)
             return None
 
     async def set(
@@ -139,10 +139,10 @@ class RedisCache:
                 self.config.ttl,
                 audio,
             )
-            logger.debug(f"Cached: {key} ({len(audio)} bytes)")
+            logger.debug("Cached: %s (%s bytes)", key, len(audio))
             return True
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
-            logger.warning(f"Cache set error: {e}")
+            logger.warning("Cache set error: %s", e)
             return False
 
     async def delete(self, text: str, voice: str, speed: float, model: str) -> bool:
@@ -166,7 +166,7 @@ class RedisCache:
             self._client.delete(key)
             return True
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
-            logger.warning(f"Cache delete error: {e}")
+            logger.warning("Cache delete error: %s", e)
             return False
 
     async def clear(self) -> int:
@@ -186,7 +186,7 @@ class RedisCache:
                 return self._client.delete(*keys)
             return 0
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
-            logger.warning(f"Cache clear error: {e}")
+            logger.warning("Cache clear error: %s", e)
             return 0
 
     def close(self) -> None:

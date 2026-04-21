@@ -132,7 +132,7 @@ class SSMLParser:
                 else:
                     current_speed = float(rate_attr)
             except ValueError:
-                logger.warning(f"Invalid prosody rate: {rate_attr}")
+                logger.warning("Invalid prosody rate: %s", rate_attr)
                 current_speed = default_speed
         if element.get("pitch"):
             logger.warning("pitch attribute not supported, ignoring")
@@ -265,7 +265,7 @@ class SSMLParser:
 
             # Check root element
             if root.tag.lower() != "speak":
-                logger.warning(f"Unexpected root element: {root.tag}, expected <speak>")
+                logger.warning("Unexpected root element: %s, expected <speak>", root.tag)
                 return ParsedSSML(input_text=ssml_string, is_ssml=False)
 
             # Extract global attributes
@@ -289,10 +289,10 @@ class SSMLParser:
             )
 
         except ET.ParseError as e:
-            logger.warning(f"SSML parsing failed, falling back to plain text: {e}")
+            logger.warning("SSML parsing failed, falling back to plain text: %s", e)
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
         except (ET.ParseError, ValueError, OSError) as e:
-            logger.error(f"Unexpected error parsing SSML: {e}")
+            logger.error("Unexpected error parsing SSML: %s", e)
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
 
     @classmethod

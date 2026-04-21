@@ -74,7 +74,7 @@ class SynthesisEngine:
             logger.warning("Empty text provided to synthesize")
             return b""
 
-        logger.info(f"Synthesizing text (len={len(text)}, voice={voice}, speed={speed})")
+        logger.info("Synthesizing text (len=%s, voice=%s, speed=%s)", len(text), voice, speed)
 
         try:
             # Apply Taiwan linguistic processing
@@ -98,21 +98,21 @@ class SynthesisEngine:
             response.raise_for_status()
 
             audio_data = response.content
-            logger.debug(f"Received audio data: {len(audio_data)} bytes")
+            logger.debug("Received audio data: %s bytes", len(audio_data))
 
             return audio_data
 
         except httpx.TimeoutException:
-            logger.error(f"Request timeout for text: {text[:50]}...")
+            logger.error("Request timeout for text: %s...", text[:50])
             raise
         except httpx.HTTPStatusError as e:
-            logger.error(f"HTTP error {e.response.status_code}: {e.response.text}")
+            logger.error("HTTP error %s: %s", e.response.status_code, e.response.text)
             raise
         except httpx.HTTPError as e:
-            logger.error(f"HTTP error during synthesis: {e}")
+            logger.error("HTTP error during synthesis: %s", e)
             raise
         except (ValueError, IOError, OSError) as e:
-            logger.error(f"Unexpected error during synthesis: {e}")
+            logger.error("Unexpected error during synthesis: %s", e)
             raise
 
     async def synthesize_segments(
@@ -142,7 +142,7 @@ class SynthesisEngine:
             speed = seg.get("speed", DEFAULT_SPEED)
 
             if text and text.strip():
-                logger.debug(f"Queuing segment {i}: {text[:30]}... (speed={speed})")
+                logger.debug("Queuing segment %s: %s... (speed=%s)", i, text[:30], speed)
                 tasks.append(
                     self._synthesize_segment_with_retry(text, voice, speed, model)
                 )
@@ -151,7 +151,7 @@ class SynthesisEngine:
             return b""
 
         # Execute all syntheses in parallel
-        logger.info(f"Starting parallel synthesis of {len(tasks)} segments")
+        logger.info("Starting parallel synthesis of %s segments", len(tasks))
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         # Process results
@@ -160,7 +160,7 @@ class SynthesisEngine:
 
         for i, result in enumerate(results):
             if isinstance(result, Exception):
-                logger.error(f"Segment {i} failed: {result}")
+                logger.error("Segment %s failed: %s", i, result)
                 errors.append(f"Segment {i}: {str(result)}")
             elif isinstance(result, bytes) and result:
                 audio_chunks.append(result)
@@ -174,7 +174,7 @@ class SynthesisEngine:
 
         # Concatenate audio chunks
         final_audio = self._concatenate_audio(audio_chunks)
-        logger.info(f"Concatenated {len(audio_chunks)} audio chunks -> {len(final_audio)} bytes")
+        logger.info("Concatenated %s audio chunks -> %s bytes", len(audio_chunks), len(final_audio))
 
         return final_audio
 
@@ -208,7 +208,7 @@ class SynthesisEngine:
                 last_error = synth_err
                 if attempt < max_retries:
                     wait_time = 2 ** attempt * 0.5
-                    logger.warning(f"Retry {attempt + 1}/{max_retries} after {wait_time}s: {synth_err}")
+                    logger.warning("Retry %s/%s after %ss: %s", attempt + 1, max_retries, wait_time, synth_err)
                     await asyncio.sleep(wait_time)
 
         raise last_error or RuntimeError("Synthesis failed")
@@ -254,7 +254,7 @@ class SynthesisEngine:
         Returns:
             Final audio bytes
         """
-        logger.info(f"Processing SSML (len={len(ssml_text)}, voice={voice})")
+        logger.info("Processing SSML (len=%s, voice=%s)", len(ssml_text), voice)
 
         # Step 1: Parse SSML
         parsed = self.ssml_parser.parse(ssml_text)
@@ -307,7 +307,7 @@ class SynthesisEngine:
         Returns:
             Audio bytes
         """
-        logger.info(f"Synthesizing text (len={len(text)}, voice={voice}, speed={speed})")
+        logger.info("Synthesizing text (len=%s, voice=%s, speed=%s)", len(text), voice, speed)
 
         # Check if SSML
         if self.ssml_parser.is_ssml(text):

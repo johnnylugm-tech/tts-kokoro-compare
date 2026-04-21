@@ -57,7 +57,7 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
     output_file = Path(output_path)
 
     if not input_file.exists():
-        logger.error(f"Input file not found: {input_path}")
+        logger.error("Input file not found: %s", input_path)
         return False
 
     # Ensure output directory exists
@@ -87,20 +87,20 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
         )
 
         if result.returncode != 0:
-            logger.error(f"ffmpeg conversion failed: {result.stderr}")
+            logger.error("ffmpeg conversion failed: %s", result.stderr)
             return False
 
-        logger.debug(f"Converted {input_file} -> {output_file}")
+        logger.debug("Converted %s -> %s", input_file, output_file)
         return True
 
     except RuntimeError as e:
-        logger.error(f"ffmpeg not available: {e}")
+        logger.error("ffmpeg not available: %s", e)
         return False
     except subprocess.SubprocessError as e:
-        logger.error(f"Subprocess error during conversion: {e}")
+        logger.error("Subprocess error during conversion: %s", e)
         return False
     except (RuntimeError, subprocess.SubprocessError, OSError) as e:
-        logger.error(f"Unexpected error during conversion: {e}")
+        logger.error("Unexpected error during conversion: %s", e)
         return False
 
 
@@ -120,7 +120,7 @@ def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k")
     output_file = Path(output_path)
 
     if not input_file.exists():
-        logger.error(f"Input file not found: {input_path}")
+        logger.error("Input file not found: %s", input_path)
         return False
 
     output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -143,13 +143,13 @@ def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k")
         )
 
         if result.returncode != 0:
-            logger.error(f"ffmpeg conversion failed: {result.stderr}")
+            logger.error("ffmpeg conversion failed: %s", result.stderr)
             return False
 
         return True
 
     except (RuntimeError, subprocess.SubprocessError, OSError) as e:
-        logger.error(f"Unexpected error during WAV->MP3 conversion: {e}")
+        logger.error("Unexpected error during WAV->MP3 conversion: %s", e)
         return False
 
 
@@ -210,5 +210,5 @@ def get_audio_info(file_path: str) -> Optional[dict]:
         return info
 
     except (RuntimeError, subprocess.SubprocessError, OSError) as e:
-        logger.debug(f"Could not get audio info: {e}")
+        logger.debug("Could not get audio info: %s", e)
         return None

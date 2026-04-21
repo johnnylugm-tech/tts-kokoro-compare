@@ -132,7 +132,7 @@ class TaiwanLinguisticEngine:
         # Step 3: Add spaces around English words for better tokenization
         result = cls.add_english_spaces(result)
 
-        logger.debug(f"Taiwan accent applied: '{text}' -> '{result}'")
+        logger.debug("Taiwan accent applied: '%s' -> '%s'", text, result)
         return result
 
     @classmethod
