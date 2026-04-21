@@ -120,7 +120,9 @@ class SSMLParser:
         return None
 
     @classmethod
-    def _process_prosody(cls, element: ET.Element, default_speed: float, depth: int) -> tuple[float, List[SSMLSegment]]:
+    def _process_prosody(
+        cls, element: ET.Element, default_speed: float, depth: int
+    ) -> tuple[float, List[SSMLSegment]]:
         """Process <prosody> element. Returns (adjusted_speed, child_segments)."""
         rate_attr = element.get("rate", None)
         current_speed = default_speed
@@ -142,7 +144,9 @@ class SSMLParser:
         return current_speed, child_segments
 
     @classmethod
-    def _process_emphasis(cls, element: ET.Element, current_speed: float, depth: int) -> List[SSMLSegment]:
+    def _process_emphasis(
+        cls, element: ET.Element, current_speed: float, depth: int
+    ) -> List[SSMLSegment]:
         """Process <emphasis> element."""
         level_attr = element.get("level", "moderate")
         if level_attr == "strong":
@@ -162,7 +166,9 @@ class SSMLParser:
         return None
 
     @classmethod
-    def _process_voice(cls, element: ET.Element, current_speed: float, depth: int) -> List[SSMLSegment]:
+    def _process_voice(
+        cls, element: ET.Element, current_speed: float, depth: int
+    ) -> List[SSMLSegment]:
         """Process <voice> element."""
         voice_name = element.get("name") or element.get("voice") or None
         child_segments = cls._process_element(element, current_speed, depth + 1)
@@ -171,7 +177,9 @@ class SSMLParser:
         return child_segments
 
     @classmethod
-    def _process_element(cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0) -> List[SSMLSegment]:
+    def _process_element(
+        cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0
+    ) -> List[SSMLSegment]:
         """
         Recursively process an XML element and its children.
 
