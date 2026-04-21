@@ -1,7 +1,0 @@
-{
-  "dimension": "type_safety",
-  "tool_score": 100,
-  "raw_output": "src/__init__.py: error: Duplicate module named \"src\" (also at \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/__init__.py\")\nsrc/__init__.py: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#mapping-file-paths-to-modules for more info\nsrc/__init__.py: note: Common resolutions include:\nsrc/__init__.py: note:     a) using `--exclude` to avoid checking one of them,\nsrc/__init__.py: note:     b) adding `__init__.py` somewhere,\nsrc/__init__.py: note:     c) using `--explicit-package-bases` or adjusting `MYPYPATH`\nFound 1 error in 1 file (errors prevented further checking)\n",
-  "findings": [],
-  "status": "success"
-}

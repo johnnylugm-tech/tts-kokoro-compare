@@ -1,12 +1,10 @@
 {
-  "dimension": "type_safety",
-  "round": 1,
-  "llm_provider": "minimax",
   "tool_score": 100,
   "llm_score": 100,
   "score": 100,
   "findings": [],
-  "gaps": [],
-  "tool_outputs": ".sessi-work/round_1/tools/type_safety.json",
-  "reconcile": "tool_first"
+  "dimension": "type_safety",
+  "round": 1,
+  "llm_tier": 1,
+  "tool_outputs": ".sessi-work/round_1/tools/type_safety.json"
 }

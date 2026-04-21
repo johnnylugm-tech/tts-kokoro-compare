@@ -3,8 +3,8 @@
   "llm_score": 100,
   "score": 100,
   "findings": [],
-  "dimension": "error_handling",
+  "dimension": "performance",
   "round": 1,
   "llm_tier": 3,
-  "tool_outputs": ".sessi-work/round_1/tools/error_handling.json"
+  "tool_outputs": ".sessi-work/round_1/tools/performance.json"
 }

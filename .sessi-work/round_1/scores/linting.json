@@ -1,313 +1,257 @@
 {
-  "dimension": "linting",
-  "round": 1,
-  "llm_provider": "minimax",
   "tool_score": 0,
   "llm_score": 0,
   "score": 0,
   "findings": [
     {
-      "file": "tests/test_synthesis.py",
-      "line": 396,
-      "message": "Line too long (103/100)",
+      "file": "src/audio_converter.py",
+      "line": 104,
+      "message": "Catching previously caught exception type RuntimeError",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 414,
-      "message": "Line too long (111/100)",
+      "file": "src/audio_converter.py",
+      "line": 104,
+      "message": "Catching previously caught exception type SubprocessError",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 492,
-      "message": "Line too long (111/100)",
+      "file": "src/audio_converter.py",
+      "line": 168,
+      "message": "Import outside toplevel (json)",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 539,
-      "message": "Line too long (107/100)",
+      "file": "src/cli.py",
+      "line": 22,
+      "message": "Import \"from src.config import DEFAULT_VOICE, DEFAULT_SPEED, KOKORO_BACKEND_URL\" should be placed at the top of the module",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 566,
-      "message": "Final newline missing",
-      "severity": "info"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 16,
+      "file": "src/cli.py",
+      "line": 27,
       "message": "Import \"from src.engines.synthesis import SynthesisEngine\" should be placed at the top of the module",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 36,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 43,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 50,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 52,
-      "message": "Import outside toplevel (logging)",
+      "file": "src/cli.py",
+      "line": 28,
+      "message": "Import \"from src.audio_converter import convert_mp3_to_wav\" should be placed at the top of the module",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 138,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 146,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 154,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 162,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 170,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 178,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 186,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 199,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 206,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 218,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 230,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 239,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 248,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 261,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 272,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 280,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 350,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 358,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 378,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 426,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 435,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 444,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 453,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 466,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 475,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 483,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 490,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 498,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 506,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 515,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 524,
-      "message": "Redefining name 'engine' from outer scope (line 24)",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 535,
-      "message": "Import outside toplevel (src.engines.ssml_parser.ParsedSSML)",
+      "file": "src/cli.py",
+      "line": 168,
+      "message": "Unnecessary \"else\" after \"return\", remove the \"else\" and de-indent the code inside it",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 539,
-      "message": "Unused variable 'mock_ss'",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 554,
-      "message": "Access to a protected member _executor of a client class",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 557,
-      "message": "Access to a protected member _executor of a client class",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 565,
-      "message": "Access to a protected member _executor of a client class",
-      "severity": "medium"
-    },
-    {
-      "file": "tests/test_synthesis.py",
-      "line": 9,
-      "message": "standard import \"unittest.mock.AsyncMock\" should be placed before third party import \"pytest\"",
+      "file": "src/cli.py",
+      "line": 253,
+      "message": "Catching previously caught exception type ValueError",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 12,
-      "message": "standard import \"sys\" should be placed before third party imports \"pytest\", \"httpx\"",
+      "file": "src/cli.py",
+      "line": 174,
+      "message": "Too many return statements (7/6)",
       "severity": "info"
     },
     {
-      "file": "tests/test_synthesis.py",
-      "line": 13,
-      "message": "standard import \"os\" should be placed before third party imports \"pytest\", \"httpx\"",
+      "file": "src/main.py",
+      "line": 30,
+      "message": "Constant name \"_synthesis_engine\" doesn't conform to UPPER_CASE naming style",
       "severity": "info"
     },
     {
-      "file": "tests/test_ssml_parser.py",
-      "line": 7,
-      "message": "Multiple imports on one line (sys, os)",
+      "file": "src/main.py",
+      "line": 47,
+      "message": "Import outside toplevel (httpx)",
+      "severity": "info"
+    },
+    {
+      "file": "src/main.py",
+      "line": 76,
+      "message": "Redefining name 'app' from outer scope (line 111)",
+      "severity": "info"
+    },
+    {
+      "file": "src/main.py",
+      "line": 82,
+      "message": "Using the global statement",
+      "severity": "info"
+    },
+    {
+      "file": "src/main.py",
+      "line": 76,
+      "message": "Unused argument 'app'",
+      "severity": "info"
+    },
+    {
+      "file": "src/main.py",
+      "line": 145,
+      "message": "Unused argument 'request'",
+      "severity": "info"
+    },
+    {
+      "file": "src/main.py",
+      "line": 181,
+      "message": "Import outside toplevel (httpx)",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 28,
+      "message": "Constant name \"_synthesis_engine\" doesn't conform to UPPER_CASE naming style",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 29,
+      "message": "Constant name \"_circuit_breaker\" doesn't conform to UPPER_CASE naming style",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 30,
+      "message": "Constant name \"_cache\" doesn't conform to UPPER_CASE naming style",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 38,
+      "message": "Using the global statement",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 46,
+      "message": "Using the global statement",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 57,
+      "message": "Using the global statement",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 183,
+      "message": "Consider explicitly re-raising using 'except CircuitBreakerOpen as exc' and 'raise HTTPException(status_code=503, detail='Backend service unavailable (circuit breaker open)') from exc'",
+      "severity": "info"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 224,
+      "message": "Import outside toplevel (httpx)",
+      "severity": "info"
+    },
+    {
+      "file": "src/middleware/circuit_breaker.py",
+      "line": 38,
+      "message": "Too many instance attributes (9/7)",
+      "severity": "info"
+    },
+    {
+      "file": "src/middleware/circuit_breaker.py",
+      "line": 249,
+      "message": "Import outside toplevel (asyncio)",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 56,
+      "message": "Redefining name 'redis' from outer scope (line 10)",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 56,
+      "message": "Import outside toplevel (redis)",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 102,
+      "message": "Unnecessary \"else\" after \"return\", remove the \"else\" and de-indent the code inside it",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 112,
+      "message": "Too many arguments (6/5)",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 112,
+      "message": "Too many positional arguments (6/5)",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 202,
+      "message": "Constant name \"_cache_instance\" doesn't conform to UPPER_CASE naming style",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 215,
+      "message": "Using the global statement",
+      "severity": "info"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 14,
+      "message": "Imports from package typing are not grouped",
+      "severity": "info"
+    },
+    {
+      "file": "src/engines/taiwan_linguistic.py",
+      "line": 228,
+      "message": "Unused argument 'speed_adjustments'",
+      "severity": "info"
+    },
+    {
+      "file": "src/engines/ssml_parser.py",
+      "line": 103,
+      "message": "Unnecessary \"elif\" after \"return\", remove the leading \"el\" from \"elif\"",
+      "severity": "info"
+    },
+    {
+      "file": "src/engines/ssml_parser.py",
+      "line": 77,
+      "message": "Too many return statements (7/6)",
+      "severity": "info"
+    },
+    {
+      "file": "src/engines/ssml_parser.py",
+      "line": 181,
+      "message": "Too many branches (14/12)",
+      "severity": "info"
+    },
+    {
+      "file": "src/engines/text_splitter.py",
+      "line": 271,
+      "message": "Too many nested blocks (6/5)",
+      "severity": "info"
+    },
+    {
+      "file": "src/engines/synthesis.py",
+      "line": 182,
+      "message": "Too many arguments (6/5)",
+      "severity": "info"
+    },
+    {
+      "file": "src/engines/synthesis.py",
+      "line": 182,
+      "message": "Too many positional arguments (6/5)",
       "severity": "info"
     }
   ],
-  "gaps": [],
-  "tool_outputs": ".sessi-work/round_1/tools/linting.json",
-  "reconcile": "tool_first"
+  "dimension": "linting",
+  "round": 1,
+  "llm_tier": 1,
+  "tool_outputs": ".sessi-work/round_1/tools/linting.json"
 }
