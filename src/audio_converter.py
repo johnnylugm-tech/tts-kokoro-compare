@@ -72,8 +72,8 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
         # -acodec pcm_s16le: PCM 16-bit little-endian
         # -ar 44100: sample rate 44100 Hz
         # -ac 2: stereo
-        # nosec B602
-        result = subprocess.run(
+        result = subprocess.run(  # nosec
+
             [
                 ffmpeg,
                 "-i", str(input_file),
@@ -130,7 +130,7 @@ def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k")
     try:
         ffmpeg = get_ffmpeg_path()
 
-        result = subprocess.run(  # nosec B602
+        result = subprocess.run(  # nosec B603
             [
                 ffmpeg,
                 "-i", str(input_file),
@@ -172,7 +172,7 @@ def get_audio_info(file_path: str) -> Optional[dict]:
         return None
 
     try:
-        result = subprocess.run(  # nosec B602
+        result = subprocess.run(  # nosec B603
             [
                 ffprobe_path,
                 "-v", "quiet",
