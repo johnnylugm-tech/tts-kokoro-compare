@@ -2,7 +2,7 @@
 
 import re
 import logging
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET  # nosec - SSML is trusted internal format
 from typing import List, Optional
 from dataclasses import dataclass, field
 
