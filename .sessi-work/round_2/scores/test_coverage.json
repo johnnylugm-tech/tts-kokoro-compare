@@ -1,0 +1,19 @@
+{
+  "dimension": "test_coverage",
+  "round": 2,
+  "llm_provider": "minimax",
+  "tool_score": 85.0,
+  "llm_score": 85.0,
+  "score": 85.0,
+  "findings": [
+    {
+      "file": "TOTAL",
+      "line": 0,
+      "message": "Coverage: 85.0%",
+      "severity": "info"
+    }
+  ],
+  "gaps": [],
+  "tool_outputs": ".sessi-work/round_2/tools/test_coverage.json",
+  "reconcile": "tool_first"
+}

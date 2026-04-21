@@ -1,0 +1,308 @@
+{
+  "dimension": "linting",
+  "tool_score": 0,
+  "raw_output": "[\n    {\n        \"type\": \"convention\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"\",\n        \"line\": 396,\n        \"column\": 0,\n        \"endLine\": null,\n        \"endColumn\": null,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"line-too-long\",\n        \"message\": \"Line too long (103/100)\",\n        \"message-id\": \"C0301\"\n    },\n    {\n        \"type\": \"convention\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"\",\n        \"line\": 414,\n        \"column\": 0,\n        \"endLine\": null,\n        \"endColumn\": null,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"line-too-long\",\n        \"message\": \"Line too long (111/100)\",\n        \"message-id\": \"C0301\"\n    },\n    {\n        \"type\": \"convention\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"\",\n        \"line\": 492,\n        \"column\": 0,\n        \"endLine\": null,\n        \"endColumn\": null,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"line-too-long\",\n        \"message\": \"Line too long (111/100)\",\n        \"message-id\": \"C0301\"\n    },\n    {\n        \"type\": \"convention\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"\",\n        \"line\": 539,\n        \"column\": 0,\n        \"endLine\": null,\n        \"endColumn\": null,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"line-too-long\",\n        \"message\": \"Line too long (107/100)\",\n        \"message-id\": \"C0301\"\n    },\n    {\n        \"type\": \"convention\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"\",\n        \"line\": 566,\n        \"column\": 0,\n        \"endLine\": null,\n        \"endColumn\": null,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"missing-final-newline\",\n        \"message\": \"Final newline missing\",\n        \"message-id\": \"C0304\"\n    },\n    {\n        \"type\": \"convention\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"\",\n        \"line\": 16,\n        \"column\": 0,\n        \"endLine\": 16,\n        \"endColumn\": 49,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"wrong-import-position\",\n        \"message\": \"Import \\\"from src.engines.synthesis import SynthesisEngine\\\" should be placed at the top of the module\",\n        \"message-id\": \"C0413\"\n    },\n    {\n        \"type\": \"warning\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"test_synthesize_empty_text\",\n        \"line\": 36,\n        \"column\": 37,\n        \"endLine\": 36,\n        \"endColumn\": 43,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"redefined-outer-name\",\n        \"message\": \"Redefining name 'engine' from outer scope (line 24)\",\n        \"message-id\": \"W0621\"\n    },\n    {\n        \"type\": \"warning\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"test_synthesize_whitespace_only\",\n        \"line\": 43,\n        \"column\": 42,\n        \"endLine\": 43,\n        \"endColumn\": 48,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"redefined-outer-name\",\n        \"message\": \"Redefining name 'engine' from outer scope (line 24)\",\n        \"message-id\": \"W0621\"\n    },\n    {\n        \"type\": \"warning\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"test_synthesize_logging_warning_for_empty\",\n        \"line\": 50,\n        \"column\": 52,\n        \"endLine\": 50,\n        \"endColumn\": 58,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"redefined-outer-name\",\n        \"message\": \"Redefining name 'engine' from outer scope (line 24)\",\n        \"message-id\": \"W0621\"\n    },\n    {\n        \"type\": \"convention\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"test_synthesize_logging_warning_for_empty\",\n        \"line\": 52,\n        \"column\": 4,\n        \"endLine\": 52,\n        \"endColumn\": 18,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"import-outside-toplevel\",\n        \"message\": \"Import outside toplevel (logging)\",\n        \"message-id\": \"C0415\"\n    },\n    {\n        \"type\": \"warning\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"test_synthesize_normal\",\n        \"line\": 138,\n        \"column\": 33,\n        \"endLine\": 138,\n        \"endColumn\": 39,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"redefined-outer-name\",\n        \"message\": \"Redefining name 'engine' from outer scope (line 24)\",\n        \"message-id\": \"W0621\"\n    },\n    {\n        \"type\": \"warning\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"test_synthesize_with_voice_and_speed\",\n        \"line\": 146,\n        \"column\": 47,\n        \"endLine\": 146,\n        \"endColumn\": 53,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"redefined-outer-name\",\n        \"message\": \"Redefining name 'engine' from outer scope (line 24)\",\n        \"message-id\": \"W0621\"\n    },\n    {\n        \"type\": \"warning\",\n        \"module\": \"tests.test_synthesis\",\n        \"obj\": \"test_synthesize_returns_raw_bytes\",\n        \"line\": 154,\n        \"column\": 44,\n        \"endLine\": 154,\n        \"endColumn\": 50,\n        \"path\": \"tests/test_synthesis.py\",\n        \"symbol\": \"redefined-outer-name\",\n        \"message\": \"Redefi",
+  "findings": [
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 396,
+      "message": "Line too long (103/100)",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 414,
+      "message": "Line too long (111/100)",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 492,
+      "message": "Line too long (111/100)",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 539,
+      "message": "Line too long (107/100)",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 566,
+      "message": "Final newline missing",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 16,
+      "message": "Import \"from src.engines.synthesis import SynthesisEngine\" should be placed at the top of the module",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 36,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 43,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 50,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 52,
+      "message": "Import outside toplevel (logging)",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 138,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 146,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 154,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 162,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 170,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 178,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 186,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 199,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 206,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 218,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 230,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 239,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 248,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 261,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 272,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 280,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 350,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 358,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 378,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 426,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 435,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 444,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 453,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 466,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 475,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 483,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 490,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 498,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 506,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 515,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 524,
+      "message": "Redefining name 'engine' from outer scope (line 24)",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 535,
+      "message": "Import outside toplevel (src.engines.ssml_parser.ParsedSSML)",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 539,
+      "message": "Unused variable 'mock_ss'",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 554,
+      "message": "Access to a protected member _executor of a client class",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 557,
+      "message": "Access to a protected member _executor of a client class",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 565,
+      "message": "Access to a protected member _executor of a client class",
+      "severity": "medium"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 9,
+      "message": "standard import \"unittest.mock.AsyncMock\" should be placed before third party import \"pytest\"",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 12,
+      "message": "standard import \"sys\" should be placed before third party imports \"pytest\", \"httpx\"",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_synthesis.py",
+      "line": 13,
+      "message": "standard import \"os\" should be placed before third party imports \"pytest\", \"httpx\"",
+      "severity": "info"
+    },
+    {
+      "file": "tests/test_ssml_parser.py",
+      "line": 7,
+      "message": "Multiple imports on one line (sys, os)",
+      "severity": "info"
+    }
+  ],
+  "status": "success"
+}

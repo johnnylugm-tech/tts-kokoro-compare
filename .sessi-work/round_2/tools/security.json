@@ -1,0 +1,308 @@
+{
+  "dimension": "security",
+  "tool_score": 0,
+  "raw_output": "{\n  \"errors\": [],\n  \"generated_at\": \"2026-04-21T07:48:37Z\",\n  \"metrics\": {\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/audio_converter.py\": {\n      \"CONFIDENCE.HIGH\": 4,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 4,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 159,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/cache/__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/cache/redis_cache.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 177,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/cli.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 198,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/config.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 22,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/engines/__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/engines/ssml_parser.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 255,\n      \"nosec\": 2,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/engines/synthesis.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 260,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/engines/taiwan_linguistic.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 211,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/engines/text_splitter.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 229,\n      \"nosec\": 0,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/main.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 156,\n      \"nosec\": 1,\n      \"skipped_tests\": 0\n    },\n    \"/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/middleware/__init__.py\": {\n      \"CONFIDENCE.HIGH\": 0,\n      \"CONFIDENCE.LOW\": 0,\n      \"CONFIDENCE.MEDIUM\": 0,\n      \"CONFIDENCE.UNDEFINED\": 0,\n      \"SEVERITY.HIGH\": 0,\n      \"SEVERITY.LOW\": 0,\n      \"SEVERITY.MEDIUM\": 0,\n      \"SEVERITY.UNDEFINED\": 0,\n      \"loc\": 0,\n      \"nosec\": 0,\n      \"skipped_tests\": 0",
+  "findings": [
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/audio_converter.py",
+      "line": 10,
+      "message": "Consider possible security implications associated with the subprocess module.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/audio_converter.py",
+      "line": 74,
+      "message": "subprocess call - check for execution of untrusted input.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/audio_converter.py",
+      "line": 131,
+      "message": "subprocess call - check for execution of untrusted input.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/src/audio_converter.py",
+      "line": 173,
+      "message": "subprocess call - check for execution of untrusted input.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 21,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 26,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 27,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 33,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 43,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 51,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 64,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 65,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 66,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 67,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_audio_converter.py",
+      "line": 72,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 24,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 25,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 31,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 37,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 38,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 44,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 45,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 51,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 57,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 63,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 69,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 70,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 71,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 72,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 84,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 96,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 115,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 131,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 143,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_cli.py",
+      "line": 153,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 24,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 25,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 28,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 32,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 36,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 37,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 38,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 44,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 45,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 46,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 53,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 57,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 58,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 59,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    },
+    {
+      "file": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/tests/test_integration.py",
+      "line": 65,
+      "message": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "severity": "low"
+    }
+  ],
+  "status": "success"
+}

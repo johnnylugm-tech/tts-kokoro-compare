@@ -1,0 +1,14 @@
+{
+  "dimension": "architecture",
+  "tool_score": 70,
+  "raw_output": "{\"header\" : {\n  \"cloc_url\"           : \"github.com/AlDanial/cloc\",\n  \"cloc_version\"       : \"2.08\",\n  \"elapsed_seconds\"    : 0.241329908370972,\n  \"n_files\"            : 90,\n  \"n_lines\"            : 120021,\n  \"files_per_second\"   : 372.933469405094,\n  \"lines_per_second\"   : 497331.643682987},\n\"JSON\" :{\n  \"nFiles\": 32,\n  \"blank\": 0,\n  \"comment\": 0,\n  \"code\": 49865},\n\"Python\" :{\n  \"nFiles\": 50,\n  \"blank\": 12900,\n  \"comment\": 13898,\n  \"code\": 42628},\n\"Markdown\" :{\n  \"nFiles\": 5,\n  \"blank\": 168,\n  \"comment\": 0,\n  \"code\": 548},\n\"Text\" :{\n  \"nFiles\": 1,\n  \"blank\": 0,\n  \"comment\": 0,\n  \"code\": 8},\n\"INI\" :{\n  \"nFiles\": 2,\n  \"blank\": 0,\n  \"comment\": 0,\n  \"code\": 6},\n\"SUM\": {\n  \"blank\": 13068,\n  \"comment\": 13898,\n  \"code\": 93055,\n  \"nFiles\": 90} }\n",
+  "findings": [
+    {
+      "file": "language:Python",
+      "line": 0,
+      "message": "cloc: 50 files, 42628 LOC, 853 LOC/file, 20.0% comments",
+      "severity": "info"
+    }
+  ],
+  "status": "success"
+}

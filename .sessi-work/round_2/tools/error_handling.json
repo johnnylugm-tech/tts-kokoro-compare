@@ -1,0 +1,308 @@
+{
+  "dimension": "error_handling",
+  "tool_score": 0,
+  "raw_output": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_speech_router.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_speech_router.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_speech_router.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:    try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/routers/speech.py:    try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/routers/speech.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/routers/speech.py:    try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:\n/Users/jo",
+  "findings": [
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_speech_router.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_speech_router.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_speech_router.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:    try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_live.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/routers/speech.py:    try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/routers/speech.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/routers/speech.py:    try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/middleware/circuit_breaker.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/src/cache/redis_cache.py:        try:",
+      "severity": "info"
+    }
+  ],
+  "status": "success"
+}
