@@ -102,6 +102,34 @@ pytest: 200 passed, 9 failed
 - 測試隔離: ✅ 正確（使用 fixture cleanup）
 ```
 
+### 維度分數更新（Round 1 完成後）
+
+| 維度 | Target | 分數 | 狀態 |
+|------|--------|------|------|
+| linting | 95 | ~78 | ⚠️ 落後（從 ~70 提升）|
+| type_safety | 95 | 100 | ✅ |
+| test_coverage | 80 | ~72 | ⚠️ 落後 |
+| security | 90 | 85 | ⚠️ 落後（2 medium 待確認）|
+| error_handling | 85 | ~75 | ⚠️ 落後 |
+| documentation | 85 | ~80 | ⚠️ 落後 |
+
+### Linting 修復統計
+
+| 修復項目 | 數量 | 狀態 |
+|---------|------|------|
+| Trailing whitespace | 248 | ✅ 已修復 |
+| logging-fstring-interpolation | 56 | ✅ 已修復 |
+| line-too-long | 6 | ✅ 已修復 |
+| raise-missing-from | 1 | ✅ 已修復 |
+| **剩餘 src/ 問題** | 41 | ⚠️ 極少數可接受 |
+
+### Bandit 安全問題
+
+| Severity | 位置 | 描述 | 建議 |
+|----------|------|------|------|
+| MEDIUM | ssml_parser.py:272 | ET.fromstring 可能 XXE 攻擊 | SSML 為內部標記語言，風險低 |
+| MEDIUM | main.py:213 | binding 0.0.0.0 | 應設為預設值而非硬編碼 |
+
 ### 合規矩陣摘要
 
 | 維度 | Target | 預估分數 | 狀態 |
