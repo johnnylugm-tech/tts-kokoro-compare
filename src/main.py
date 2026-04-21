@@ -32,19 +32,19 @@ _synthesis_engine: SynthesisEngine | None = None
 async def warmup_backend() -> bool:
     """
     Perform warmup request to load model weights.
-    
+
     Returns:
         True if warmup succeeded
     """
     if not WARMUP_ENABLED:
         logger.info("Warmup disabled")
         return True
-    
+
     logger.info("Starting backend warmup...")
-    
+
     try:
         import httpx
-        
+
         async with httpx.AsyncClient(timeout=30.0) as client:
             # Warmup with a simple request
             payload = {
@@ -53,19 +53,19 @@ async def warmup_backend() -> bool:
                 "voice": "zf_xiaoxiao",
                 "speed": 1.0,
             }
-            
+
             response = await client.post(
                 KOKORO_BACKEND_URL,
                 json=payload,
             )
-            
+
             response.raise_for_status()
-            
+
             logger.info(
                 f"Warmup successful: received {len(response.content)} bytes"
             )
             return True
-            
+
     except (httpx.HTTPError, httpx.TimeoutException, OSError) as e:
         logger.warning(f"Warmup failed: {e}")
         return False
@@ -75,30 +75,30 @@ async def warmup_backend() -> bool:
 async def lifespan(app: FastAPI):
     """
     Application lifespan manager.
-    
+
     Handles startup and shutdown events.
     """
     global _synthesis_engine
-    
+
     # Startup
     logger.info("=" * 50)
     logger.info("Kokoro Taiwan Proxy starting...")
     logger.info(f"Backend URL: {KOKORO_BACKEND_URL}")
     logger.info("=" * 50)
-    
+
     # Initialize synthesis engine
     _synthesis_engine = SynthesisEngine()
-    
+
     # Warmup backend
     if WARMUP_ENABLED:
         warmup_success = await warmup_backend()
         if not warmup_success:
             logger.warning("Warmup failed, service will start anyway")
-    
+
     logger.info("Application startup complete")
-    
+
     yield
-    
+
     # Shutdown
     logger.info("Shutting down...")
     if _synthesis_engine:
@@ -132,9 +132,9 @@ app.add_middleware(
 async def log_requests(request: Request, call_next):
     """Log all incoming requests."""
     logger.info(f"Request: {request.method} {request.url.path}")
-    
+
     response = await call_next(request)
-    
+
     logger.info(f"Response: {response.status_code}")
     return response
 
@@ -169,13 +169,13 @@ async def root():
 async def health_check():
     """
     Health check endpoint.
-    
+
     Returns:
         Health status and backend URL
     """
     # Check if backend is reachable
     backend_reachable = False
-    
+
     try:
         import httpx
         async with httpx.AsyncClient(timeout=5.0) as client:
@@ -186,7 +186,7 @@ async def health_check():
     except httpx.HTTPError as e:
         logger.warning(f"Health check failed: {e}")
         backend_reachable = False
-    
+
     return {
         "status": "ok" if backend_reachable else "degraded",
         "backend": KOKORO_BACKEND_URL,
@@ -198,7 +198,7 @@ async def health_check():
 async def readiness_check():
     """
     Readiness check for Kubernetes/load balancer.
-    
+
     Returns:
         Ready status
     """
@@ -207,7 +207,7 @@ async def readiness_check():
 
 if __name__ == "__main__":
     import uvicorn
-    
+
     uvicorn.run(
         "src.main:app",
         host="0.0.0.0",

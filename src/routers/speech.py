@@ -62,30 +62,30 @@ def get_cache() -> RedisCache:
 def get_effective_voice(request: SpeechRequest) -> str:
     """
     Determine effective voice based on request and model mapping.
-    
+
     Args:
         request: Speech request
-        
+
     Returns:
         Voice identifier to use
     """
     if request.voice:
         return request.voice
-    
+
     model_voice = MODEL_MAP.get(request.model)
     if model_voice:
         return model_voice
-    
+
     return DEFAULT_VOICE
 
 
 def get_effective_speed(request: SpeechRequest) -> float:
     """
     Determine effective speed based on request.
-    
+
     Args:
         request: Speech request
-        
+
     Returns:
         Speed multiplier
     """
@@ -96,17 +96,17 @@ def get_effective_speed(request: SpeechRequest) -> float:
 async def generate_speech(request: SpeechRequest) -> Response:
     """
     Generate speech audio from text or SSML input.
-    
+
     This endpoint provides a OpenAI-compatible interface with additional
     Taiwan-specific language processing.
-    
+
     Request Body:
         model: Model identifier (tts-1, tts-1-hd, kokoro, custom-gentle)
         input: Text or SSML markup
         voice: Optional voice override
         speed: Optional speed multiplier (0.5-2.0)
         response_format: Output format (mp3, etc.)
-    
+
     Returns:
         Audio data in specified format
     """
@@ -114,7 +114,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
     engine = get_synthesis_engine()
     circuit_breaker = get_circuit_breaker()
     cache = get_cache()
-    
+
     # Log request
     logger.info(
         f"Speech request: model={request.model}, "
@@ -122,14 +122,14 @@ async def generate_speech(request: SpeechRequest) -> Response:
         f"voice={request.voice}, "
         f"speed={request.speed}"
     )
-    
+
     # Validate input
     if not request.input or not request.input.strip():
         raise HTTPException(status_code=400, detail="Empty input text")
-    
+
     if len(request.input) > 5000:
         raise HTTPException(status_code=400, detail="Input text too long (max 5000 chars)")
-    
+
     # Check circuit breaker
     if circuit_breaker.get_state().value == "open":
         logger.warning("Circuit breaker is open, rejecting request")
@@ -137,7 +137,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
             status_code=503,
             detail="Service temporarily unavailable (circuit breaker open)"
         )
-    
+
     try:
         # Check cache
         cached_audio = await cache.get(
@@ -146,7 +146,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
             speed=get_effective_speed(request),
             model=request.model,
         )
-        
+
         if cached_audio:
             logger.info("Returning cached audio")
             return Response(
@@ -154,14 +154,14 @@ async def generate_speech(request: SpeechRequest) -> Response:
                 media_type="audio/mpeg",
                 headers={"X-Cache": "HIT"},
             )
-        
+
         # Determine effective parameters
         voice = get_effective_voice(request)
         speed = get_effective_speed(request)
-        
+
         # Check if SSML
         is_ssml = _ssml_parser.is_ssml(request.input)
-        
+
         # Synthesize using circuit breaker
         try:
             audio_data: bytes
@@ -185,10 +185,10 @@ async def generate_speech(request: SpeechRequest) -> Response:
                 status_code=503,
                 detail="Backend service unavailable (circuit breaker open)"
             )
-        
+
         if not audio_data:
             raise HTTPException(status_code=500, detail="No audio generated")
-        
+
         # Cache the result
         await cache.set(
             text=request.input,
@@ -197,15 +197,15 @@ async def generate_speech(request: SpeechRequest) -> Response:
             model=request.model,
             audio=audio_data,
         )
-        
+
         logger.info(f"Generated audio: {len(audio_data)} bytes")
-        
+
         return Response(
             content=audio_data,
             media_type="audio/mpeg",
             headers={"X-Cache": "MISS"},
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -217,7 +217,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
 async def list_voices() -> dict:
     """
     List available voices from the Kokoro backend.
-    
+
     Returns:
         Dictionary with list of available voices
     """

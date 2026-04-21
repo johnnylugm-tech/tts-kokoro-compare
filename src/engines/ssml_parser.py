@@ -30,27 +30,27 @@ class ParsedSSML:
 
 class SSMLParser:
     """Parser for SSML (Speech Synthesis Markup Language)."""
-    
+
     # Supported SSML tags
     SUPPORTED_TAGS = {"speak", "break", "prosody", "emphasis", "phoneme", "voice"}
-    
+
     # Tags that should be removed but content preserved
     PASS_THROUGH_TAGS = {"phoneme"}
-    
+
     @staticmethod
     def is_ssml(text: str) -> bool:
         """
         Check if text contains SSML markup.
-        
+
         Args:
             text: Input text to check
-            
+
         Returns:
             True if text contains SSML tags
         """
         if not text:
             return False
-        
+
         text_lower = text.lower().strip()
         return (
             "<speak" in text_lower or
@@ -76,28 +76,28 @@ class SSMLParser:
     def _parse_time_to_chars(time_str: str) -> str:
         """
         Convert SSML time attribute to pause characters.
-        
+
         Args:
             time_str: Time string like "500ms", "1s", "0.5s"
-            
+
         Returns:
             String of pause characters (e.g., "..." for longer pauses)
         """
         if not time_str:
             return ""
-        
+
         # Extract numeric value
         match = re.match(r"(\d+(?:\.\d+)?)\s*(ms|s)?", time_str, re.IGNORECASE)
         if not match:
             return ""
-        
+
         value = float(match.group(1))
         unit = match.group(2) or "ms"
-        
+
         # Convert to milliseconds
         if unit.lower() == "s":
             value *= 1000
-        
+
         # Map duration to pause characters
         if value < 200:
             return " "
@@ -174,27 +174,27 @@ class SSMLParser:
     def _process_element(cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0) -> List[SSMLSegment]:
         """
         Recursively process an XML element and its children.
-        
+
         Args:
             element: XML element to process
             default_speed: Default speech speed
             depth: recursion depth for debugging
-            
+
         Returns:
             List of SSMLSegment objects
         """
         segments: List[SSMLSegment] = []
         current_speed = default_speed
-        
+
         # Get text content from the element itself (before any children)
         if element.text:
             text_content = element.text.strip()
             if text_content:
                 segments.append(SSMLSegment(text=text_content, speed=current_speed))
-        
+
         for child in element:
             tag_lower = child.tag.lower()
-            
+
             if tag_lower == "break":
                 seg = cls._process_break(child, current_speed)
                 if seg:
@@ -218,37 +218,37 @@ class SSMLParser:
             else:
                 if child.text:
                     segments.append(SSMLSegment(text=child.text.strip(), speed=current_speed))
-            
+
             if child.tail and child.tail.strip():
                 tail_text = child.tail.strip()
                 if tail_text:
                     segments.append(SSMLSegment(text=tail_text, speed=current_speed))
-        
+
         return segments
 
     @classmethod
     def parse(cls, ssml_string: str) -> ParsedSSML:
         """
         Parse SSML string into structured data.
-        
+
         Args:
             ssml_string: SSML markup string
-            
+
         Returns:
             ParsedSSML object with parsed content
         """
         if not ssml_string or not ssml_string.strip():
             return ParsedSSML(input_text="", is_ssml=False)
-        
+
         # Check if actually SSML
         if not cls.is_ssml(ssml_string):
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
-        
+
         try:
             # Preprocess: remove XML declaration and comments
             cleaned = cls._remove_xml_declaration(ssml_string)
             cleaned = cls._remove_comments(cleaned)
-            
+
             # Wrap in speak tag if not present
             cleaned_stripped = cleaned.strip()
             if not cleaned_stripped.lower().startswith("<speak"):
@@ -259,27 +259,27 @@ class SSMLParser:
                     cleaned = f"<speak>{cleaned}</speak>"
                 else:
                     cleaned = f"<speak>{cleaned}</speak>"
-            
+
             # Parse XML
             root = ET.fromstring(cleaned)
-            
+
             # Check root element
             if root.tag.lower() != "speak":
                 logger.warning(f"Unexpected root element: {root.tag}, expected <speak>")
                 return ParsedSSML(input_text=ssml_string, is_ssml=False)
-            
+
             # Extract global attributes
             global_speed = 1.0
             global_voice = root.get("voice") or None
-            
+
             # Process the speak element
             segments = cls._process_element(root, global_speed)
-            
+
             # Combine all text segments
             combined_text = ""
             for seg in segments:
                 combined_text += seg.text + seg.pause_chars
-            
+
             return ParsedSSML(
                 input_text=combined_text.strip(),
                 speed=global_speed,
@@ -287,7 +287,7 @@ class SSMLParser:
                 segments=segments,
                 is_ssml=True
             )
-            
+
         except ET.ParseError as e:
             logger.warning(f"SSML parsing failed, falling back to plain text: {e}")
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
@@ -299,21 +299,21 @@ class SSMLParser:
     def extract_plain_text(cls, ssml_string: str) -> str:
         """
         Extract plain text from SSML, removing all markup.
-        
+
         Args:
             ssml_string: SSML markup string
-            
+
         Returns:
             Plain text with all SSML tags removed
         """
         if not cls.is_ssml(ssml_string):
             return ssml_string
-        
+
         # Remove all XML-like tags
         pattern = re.compile(r"<[^>]+>")
         result = pattern.sub(" ", ssml_string)
-        
+
         # Clean up whitespace
         result = re.sub(r"\s+", " ", result).strip()
-        
+
         return result

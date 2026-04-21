@@ -30,25 +30,25 @@ class CacheConfig:
 class RedisCache:
     """
     Redis-based cache for TTS audio.
-    
+
     This is an optional layer that can reduce backend load
     for repeated requests.
     """
-    
+
     def __init__(self, config: Optional[CacheConfig] = None):
         """
         Initialize Redis cache.
-        
+
         Args:
             config: Cache configuration
         """
         self.config = config or CacheConfig()
         self._client: Any = None  # type: ignore[assignment]
         self._connected = False
-        
+
         if self.config.enabled:
             self._connect()
-    
+
     def _connect(self) -> None:
         """Establish Redis connection."""
         try:
@@ -70,34 +70,34 @@ class RedisCache:
         except (ValueError, IOError, OSError) as e:
             logger.warning(f"Redis connection failed: {e}, cache disabled")
             self._connected = False
-    
+
     def _generate_key(self, text: str, voice: str, speed: float, model: str) -> str:
         """Generate cache key from request parameters."""
         # Create deterministic hash of request
         params = f"{model}:{voice}:{speed}:{text}"
         hash_value = hashlib.sha256(params.encode()).hexdigest()[:16]
         return f"{self.config.prefix}{hash_value}"
-    
+
     async def get(self, text: str, voice: str, speed: float, model: str) -> Optional[bytes]:
         """
         Get cached audio for request.
-        
+
         Args:
             text: Input text
             voice: Voice identifier
             speed: Speed multiplier
             model: Model identifier
-            
+
         Returns:
             Cached audio bytes or None if not found
         """
         if not self._connected or not self._client:
             return None
-        
+
         try:
             key = self._generate_key(text, voice, speed, model)
             result = self._client.get(key)
-            
+
             if result:
                 logger.debug(f"Cache hit: {key}")
                 return result
@@ -107,7 +107,7 @@ class RedisCache:
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache get error: {e}")
             return None
-    
+
     async def set(
         self,
         text: str,
@@ -118,20 +118,20 @@ class RedisCache:
     ) -> bool:
         """
         Store audio in cache.
-        
+
         Args:
             text: Input text
             voice: Voice identifier
             speed: Speed multiplier
             model: Model identifier
             audio: Audio bytes to cache
-            
+
         Returns:
             True if cached successfully
         """
         if not self._connected or not self._client:
             return False
-        
+
         try:
             key = self._generate_key(text, voice, speed, model)
             self._client.setex(
@@ -144,23 +144,23 @@ class RedisCache:
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache set error: {e}")
             return False
-    
+
     async def delete(self, text: str, voice: str, speed: float, model: str) -> bool:
         """
         Delete cached entry.
-        
+
         Args:
             text: Input text
             voice: Voice identifier
             speed: Speed multiplier
             model: Model identifier
-            
+
         Returns:
             True if deleted successfully
         """
         if not self._connected or not self._client:
             return False
-        
+
         try:
             key = self._generate_key(text, voice, speed, model)
             self._client.delete(key)
@@ -168,17 +168,17 @@ class RedisCache:
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache delete error: {e}")
             return False
-    
+
     async def clear(self) -> int:
         """
         Clear all cache entries with the configured prefix.
-        
+
         Returns:
             Number of keys deleted
         """
         if not self._connected or not self._client:
             return 0
-        
+
         try:
             pattern = f"{self.config.prefix}*"
             keys = list(self._client.scan_iter(match=pattern))
@@ -188,7 +188,7 @@ class RedisCache:
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning(f"Cache clear error: {e}")
             return 0
-    
+
     def close(self) -> None:
         """Close Redis connection."""
         if self._client:
@@ -204,10 +204,10 @@ _cache_instance: Optional[RedisCache] = None
 def get_cache(config: Optional[CacheConfig] = None) -> RedisCache:
     """
     Get or create cache singleton.
-    
+
     Args:
         config: Optional cache configuration
-        
+
     Returns:
         RedisCache instance
     """

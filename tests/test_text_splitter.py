@@ -97,12 +97,12 @@ class TestTextSplitter:
         text_249 = "。" * 249
         result_249 = splitter.split(text_249)
         assert len(result_249) == 1
-        
+
         # 251 chars - should be split
         text_251 = "。" * 251
         result_251 = splitter.split(text_251)
         assert len(result_251) >= 2
-        
+
         # 每段都不超過 250
         for seg in result_251:
             assert len(seg) <= 250
