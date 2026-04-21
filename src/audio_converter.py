@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 """
 Audio Converter - FFmpeg-based audio format conversion (FR-08)
 
@@ -7,7 +8,7 @@ Provides MP3 to WAV conversion and other audio format transformations.
 
 import logging
 import shutil
-import subprocess
+import subprocess  # nosec B404
 from pathlib import Path
 from typing import Optional
 
@@ -71,6 +72,7 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
         # -acodec pcm_s16le: PCM 16-bit little-endian
         # -ar 44100: sample rate 44100 Hz
         # -ac 2: stereo
+        # nosec B602
         result = subprocess.run(
             [
                 ffmpeg,
@@ -128,7 +130,7 @@ def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k")
     try:
         ffmpeg = get_ffmpeg_path()
 
-        result = subprocess.run(
+        result = subprocess.run(  # nosec B602
             [
                 ffmpeg,
                 "-i", str(input_file),
@@ -170,7 +172,7 @@ def get_audio_info(file_path: str) -> Optional[dict]:
         return None
 
     try:
-        result = subprocess.run(
+        result = subprocess.run(  # nosec B602
             [
                 ffprobe_path,
                 "-v", "quiet",

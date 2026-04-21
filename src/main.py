@@ -1,4 +1,5 @@
 """Kokoro Taiwan Proxy - FastAPI Application."""
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 
 import logging
 from contextlib import asynccontextmanager

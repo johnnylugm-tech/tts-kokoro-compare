@@ -1,4 +1,5 @@
 """Synthesis Engine - handles TTS synthesis with parallel processing."""
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 
 import asyncio
 import logging
