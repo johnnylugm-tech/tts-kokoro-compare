@@ -1,4 +1,5 @@
 """SSML Parser - handles Speech Synthesis Markup Language parsing."""
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 
 import re
 import logging

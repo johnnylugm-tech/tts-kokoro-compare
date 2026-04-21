@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 """
 CLI Tool for Kokoro Taiwan TTS - FR-07
 

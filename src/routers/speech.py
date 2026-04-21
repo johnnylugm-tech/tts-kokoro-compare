@@ -1,4 +1,5 @@
 """Speech router - /v1/proxy/speech endpoint."""
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 
 import logging
 from typing import Optional

@@ -1,4 +1,5 @@
 """Configuration settings for Kokoro Taiwan Proxy."""
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 
 from typing import Dict
 

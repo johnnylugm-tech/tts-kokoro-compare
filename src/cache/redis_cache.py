@@ -1,4 +1,5 @@
 """Redis Cache - optional audio caching layer."""
+# Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 
 import hashlib
 import logging
