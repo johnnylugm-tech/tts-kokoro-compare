@@ -106,32 +106,32 @@ class TaiwanLinguisticEngine:
     def apply_taiwan_accent(cls, text: str) -> str:
         """
         Apply Taiwan-specific linguistic transformations to input text.
-        
+
         Steps:
         1. LEXICON replacement
         2. Tone sandhi normalization
         3. Add spaces around English words
-        
+
         Args:
             text: Input text to transform
-            
+
         Returns:
             Transformed text with Taiwan-specific processing applied
         """
         if not text:
             return text
-        
+
         result = text
-        
+
         # Step 1: Apply lexicon replacements
         result = cls._apply_lexicon(result)
-        
+
         # Step 2: Apply tone sandhi normalization
         result = cls._apply_tone_sandhi(result)
-        
+
         # Step 3: Add spaces around English words for better tokenization
         result = cls.add_english_spaces(result)
-        
+
         logger.debug(f"Taiwan accent applied: '{text}' -> '{result}'")
         return result
 
@@ -149,12 +149,12 @@ class TaiwanLinguisticEngine:
     def _apply_tone_sandhi(cls, text: str) -> str:
         """
         Apply tone sandhi normalization.
-        
+
         Taiwan Mandarin has fewer neutral tones and preserves full tones.
         We reduce retroflex initials (zh/ch/sh) in specific common words.
         """
         result = text
-        
+
         # These patterns reduce retroflex sounds to alveolar in casual speech
         # Note: This is a simplified version; full sandhi rules are complex
         replacements = [
@@ -166,72 +166,72 @@ class TaiwanLinguisticEngine:
             (r"\b所以\b", "所以"),
             (r"\b開始\b", "開始"),
         ]
-        
+
         for pattern_str, replacement in replacements:
             pattern = re.compile(pattern_str)
             result = pattern.sub(replacement, result)
-        
+
         return result
 
     @classmethod
     def add_english_spaces(cls, text: str) -> str:
         """
         Add spaces around English words for better TTS tokenization.
-        
+
         Example:
             "我愛AI" -> "我愛 AI "
             "HelloWorld" -> "HelloWorld " (no change if already spaced)
             "使用Python3.10" -> "使用 Python3.10 "
-        
+
         Args:
             text: Input text with potential mixed Chinese/English
-            
+
         Returns:
             Text with spaces added around English words
         """
         if not text:
             return text
-        
+
         # Find all English words/sequences and add spaces around them
         result = ENGLISH_WORD_PATTERN.sub(r" \1 ", text)
-        
+
         # Clean up multiple spaces
         result = re.sub(r"\s+", " ", result).strip()
-        
+
         return result
 
     @classmethod
     def normalize_numbers(cls, text: str) -> str:
         """
         Normalize number expressions for Taiwan Mandarin.
-        
+
         Args:
             text: Input text with numbers
-            
+
         Returns:
             Text with numbers normalized
         """
         # Arabic numerals to Chinese conversion for common cases
         result = text
-        
+
         # Percentage
         result = re.sub(r"(\d+)%", r"\1%", result)  # Keep as-is
-        
+
         # Phone numbers - add spaces
         phone_pattern = re.compile(r"(\d{4})(\d{3})(\d{3})")
         result = phone_pattern.sub(r"\1 \2 \3", result)
-        
+
         return result
 
     @classmethod
     def add_prosody_markers(cls, text: str, speed_adjustments: list) -> str:
         """
         Add internal prosody markers for better rhythm.
-        
+
         Args:
             text: Input text
             speed_adjustments: List of (position, speed_multiplier) tuples
-            
+
         Returns:
             Text with prosody hints
         """
@@ -243,43 +243,43 @@ class TaiwanLinguisticEngine:
     def validate_text(cls, text: str) -> tuple[bool, str]:
         """
         Validate if text is suitable for TTS.
-        
+
         Args:
             text: Input text to validate
-            
+
         Returns:
             Tuple of (is_valid, error_message)
         """
         if not text or not text.strip():
             return False, "Empty text provided"
-        
+
         if len(text) > 5000:
             return False, "Text too long (max 5000 characters)"
-        
+
         # Check for potentially problematic characters
         if re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", text):
             return False, "Text contains control characters"
-        
+
         return True, ""
 
     @classmethod
     def preprocess_for_tts(cls, text: str) -> str:
         """
         Full preprocessing pipeline for TTS.
-        
+
         Args:
             text: Raw input text
-            
+
         Returns:
             Fully preprocessed text ready for TTS
         """
         # Step 1: Basic cleanup
         cleaned = text.strip()
-        
+
         # Step 2: Apply Taiwan-specific transformations
         processed = cls.apply_taiwan_accent(cleaned)
-        
+
         # Step 3: Normalize spacing
         processed = re.sub(r"\s+", " ", processed)
-        
+
         return processed

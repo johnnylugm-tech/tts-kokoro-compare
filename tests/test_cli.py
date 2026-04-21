@@ -87,11 +87,11 @@ class TestCLIInputReading:
         """從檔案讀取"""
         test_file = tmp_path / "input.txt"
         test_file.write_text("檔案內容", encoding="utf-8")
-        
+
         args = MagicMock()
         args.input = None
         args.file = str(test_file)
-        
+
         result = read_input(args)
         assert result == "檔案內容"
 
@@ -100,7 +100,7 @@ class TestCLIInputReading:
         args = MagicMock()
         args.input = None
         args.file = "/nonexistent/file.txt"
-        
+
         with pytest.raises(FileNotFoundError):
             read_input(args)
 
@@ -124,9 +124,9 @@ class TestSynthesize:
         """一般文字合成"""
         mock_engine = AsyncMock()
         mock_engine.synthesize_text.return_value = b"fake_audio_data"
-        
+
         result = await synthesize(mock_engine, "測試", "zf_xiaoxiao", 1.0, False)
-        
+
         mock_engine.synthesize_text.assert_called_once()
         assert result == b"fake_audio_data"
 
@@ -135,10 +135,10 @@ class TestSynthesize:
         """SSML 模式合成"""
         mock_engine = AsyncMock()
         mock_engine.synthesize_ssml.return_value = b"ssml_audio"
-        
+
         ssml = "<speak><prosody rate='0.9'>測試</prosody></speak>"
         result = await synthesize(mock_engine, ssml, "zf_xiaoxiao", 1.0, True)
-        
+
         mock_engine.synthesize_ssml.assert_called_once()
         assert result == b"ssml_audio"
 

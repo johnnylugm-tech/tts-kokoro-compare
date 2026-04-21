@@ -25,10 +25,10 @@ def is_ffmpeg_available() -> bool:
 def get_ffmpeg_path() -> str:
     """
     Get ffmpeg executable path.
-    
+
     Returns:
         Path to ffmpeg executable
-        
+
     Raises:
         RuntimeError: If ffmpeg is not found
     """
@@ -43,29 +43,29 @@ def get_ffmpeg_path() -> str:
 def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
     """
     Convert MP3 audio file to WAV format using ffmpeg.
-    
+
     Uses ffmpeg with PCM 16-bit little-endian codec for maximum compatibility.
-    
+
     Args:
         input_path: Path to input MP3 file
         output_path: Path to output WAV file
-        
+
     Returns:
         True if conversion succeeded, False otherwise
     """
     input_file = Path(input_path)
     output_file = Path(output_path)
-    
+
     if not input_file.exists():
         logger.error(f"Input file not found: {input_path}")
         return False
-    
+
     # Ensure output directory exists
     output_file.parent.mkdir(parents=True, exist_ok=True)
-    
+
     try:
         ffmpeg = get_ffmpeg_path()
-        
+
         # Run ffmpeg conversion
         # -i: input file
         # -acodec pcm_s16le: PCM 16-bit little-endian
@@ -85,14 +85,14 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
             text=True,
             check=False,
         )
-        
+
         if result.returncode != 0:
             logger.error(f"ffmpeg conversion failed: {result.stderr}")
             return False
-        
+
         logger.debug(f"Converted {input_file} -> {output_file}")
         return True
-        
+
     except RuntimeError as e:
         logger.error(f"ffmpeg not available: {e}")
         return False
@@ -107,27 +107,27 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
 def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k") -> bool:
     """
     Convert WAV audio file to MP3 format using ffmpeg.
-    
+
     Args:
         input_path: Path to input WAV file
         output_path: Path to output MP3 file
         bitrate: MP3 bitrate (default: 192k)
-        
+
     Returns:
         True if conversion succeeded, False otherwise
     """
     input_file = Path(input_path)
     output_file = Path(output_path)
-    
+
     if not input_file.exists():
         logger.error(f"Input file not found: {input_path}")
         return False
-    
+
     output_file.parent.mkdir(parents=True, exist_ok=True)
-    
+
     try:
         ffmpeg = get_ffmpeg_path()
-        
+
         result = subprocess.run(
             [
                 ffmpeg,
@@ -141,13 +141,13 @@ def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k")
             text=True,
             check=False,
         )
-        
+
         if result.returncode != 0:
             logger.error(f"ffmpeg conversion failed: {result.stderr}")
             return False
-        
+
         return True
-        
+
     except (RuntimeError, subprocess.SubprocessError, OSError) as e:
         logger.error(f"Unexpected error during WAV->MP3 conversion: {e}")
         return False
@@ -156,19 +156,19 @@ def convert_wav_to_mp3(input_path: str, output_path: str, bitrate: str = "192k")
 def get_audio_info(file_path: str) -> Optional[dict]:
     """
     Get audio file information using ffprobe.
-    
+
     Args:
         file_path: Path to audio file
-        
+
     Returns:
         Dictionary with audio info (duration, bitrate, format) or None
     """
     import json
-    
+
     ffprobe_path = shutil.which("ffprobe")
     if ffprobe_path is None:
         return None
-    
+
     try:
         result = subprocess.run(
             [
@@ -183,9 +183,9 @@ def get_audio_info(file_path: str) -> Optional[dict]:
             text=True,
             check=True,
         )
-        
+
         data = json.loads(result.stdout)
-        
+
         # Extract relevant info
         info = {
             "format": data.get("format", {}).get("format_name"),
@@ -193,22 +193,22 @@ def get_audio_info(file_path: str) -> Optional[dict]:
             "bitrate": data.get("format", {}).get("bit_rate"),
             "size": int(data.get("format", {}).get("size", 0)),
         }
-        
+
         # Audio stream info
         audio_stream = next(
             (s for s in data.get("streams", []) if s.get("codec_type") == "audio"),
             None,
         )
-        
+
         if audio_stream:
             info.update({
                 "codec": audio_stream.get("codec_name"),
                 "sample_rate": audio_stream.get("sample_rate"),
                 "channels": audio_stream.get("channels"),
             })
-        
+
         return info
-        
+
     except (RuntimeError, subprocess.SubprocessError, OSError) as e:
         logger.debug(f"Could not get audio info: {e}")
         return None
