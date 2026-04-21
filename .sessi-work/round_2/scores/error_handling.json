@@ -2,9 +2,9 @@
   "dimension": "error_handling",
   "round": 2,
   "llm_provider": "minimax",
-  "tool_score": 0,
-  "llm_score": 0,
-  "score": 0,
+  "tool_score": 100,
+  "llm_score": 100,
+  "score": 100,
   "findings": [
     {
       "file": "unknown",
