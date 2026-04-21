@@ -181,7 +181,7 @@ class CircuitBreaker:
             self._half_open_attempts += 1
         elif self.state == CircuitState.CLOSED and self.failures >= self.threshold:
             logger.warning(
-                f"Circuit breaker: CLOSED -> OPEN ({self.failures} failures)"
+                "Circuit breaker: CLOSED -> OPEN (%s failures)", self.failures
             )
             self.state = CircuitState.OPEN
 

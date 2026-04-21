@@ -62,12 +62,12 @@ async def warmup_backend() -> bool:
             response.raise_for_status()
 
             logger.info(
-                f"Warmup successful: received {len(response.content)} bytes"
+                "Warmup successful: received %s bytes", len(response.content)
             )
             return True
 
     except (httpx.HTTPError, httpx.TimeoutException, OSError) as e:
-        logger.warning(f"Warmup failed: {e}")
+        logger.warning("Warmup failed: %s", e)
         return False
 
 
@@ -83,7 +83,7 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("=" * 50)
     logger.info("Kokoro Taiwan Proxy starting...")
-    logger.info(f"Backend URL: {KOKORO_BACKEND_URL}")
+    logger.info("Backend URL: %s", KOKORO_BACKEND_URL)
     logger.info("=" * 50)
 
     # Initialize synthesis engine
@@ -131,11 +131,11 @@ app.add_middleware(
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     """Log all incoming requests."""
-    logger.info(f"Request: {request.method} {request.url.path}")
+    logger.info("Request: %s %s", request.method, request.url.path)
 
     response = await call_next(request)
 
-    logger.info(f"Response: {response.status_code}")
+    logger.info("Response: %s", response.status_code)
     return response
 
 
@@ -143,7 +143,7 @@ async def log_requests(request: Request, call_next):
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     """Handle uncaught exceptions."""
-    logger.error(f"Unhandled exception: {exc}", exc_info=True)
+    logger.error("Unhandled exception: %s", exc, exc_info=True)
     return JSONResponse(
         status_code=500,
         content={"detail": "Internal server error"},
@@ -184,7 +184,7 @@ async def health_check():
             )
             backend_reachable = response.status_code == 200
     except httpx.HTTPError as e:
-        logger.warning(f"Health check failed: {e}")
+        logger.warning("Health check failed: %s", e)
         backend_reachable = False
 
     return {

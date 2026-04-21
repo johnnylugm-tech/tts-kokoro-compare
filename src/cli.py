@@ -161,8 +161,8 @@ async def synthesize(
     Returns:
         Audio bytes
     """
-    logger.info(f"Synthesizing (voice={voice}, speed={speed}, ssml={is_ssml})")
-    logger.debug(f"Input text: {text[:100]}{'...' if len(text) > 100 else ''}")
+    logger.info("Synthesizing (voice=%s, speed=%s, ssml=%s)", voice, speed, is_ssml)
+    logger.debug("Input text: %s%s", text[:100], "..." if len(text) > 100 else "")
 
     if is_ssml:
         return await engine.synthesize_ssml(text, voice, speed)
@@ -219,7 +219,7 @@ async def main_async(args: argparse.Namespace) -> int:
             if args.format == "mp3":
                 with open(output_path, "wb") as f:
                     f.write(audio_data)
-                logger.info(f"Saved MP3: {output_path} ({len(audio_data)} bytes)")
+                logger.info("Saved MP3: %s (%s bytes)", output_path, len(audio_data))
             else:
                 # Convert MP3 to WAV using ffmpeg
                 temp_mp3 = output_path.with_suffix(".mp3")
@@ -236,7 +236,7 @@ async def main_async(args: argparse.Namespace) -> int:
                     logger.error("FFmpeg conversion failed")
                     return 1
 
-                logger.info(f"Saved WAV: {output_path}")
+                logger.info("Saved WAV: %s", output_path)
 
         finally:
             await engine.close()
@@ -244,13 +244,13 @@ async def main_async(args: argparse.Namespace) -> int:
         return 0
 
     except FileNotFoundError as e:
-        logger.error(f"File error: {e}")
+        logger.error("File error: %s", e)
         return 1
     except ValueError as e:
-        logger.error(f"Input error: {e}")
+        logger.error("Input error: %s", e)
         return 1
     except (ValueError, IOError, OSError) as e:
-        logger.error(f"Synthesis error: {e}", exc_info=True)
+        logger.error("Synthesis error: %s", e, exc_info=True)
         return 1
 
 
