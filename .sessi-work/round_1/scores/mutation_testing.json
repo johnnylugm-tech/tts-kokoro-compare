@@ -1,0 +1,19 @@
+{
+  "dimension": "mutation_testing",
+  "round": 1,
+  "llm_provider": "minimax",
+  "tool_score": 76.1,
+  "llm_score": 76.1,
+  "score": 76.1,
+  "findings": [
+    {
+      "file": "mutation_summary",
+      "line": 0,
+      "message": "Mutation testing: 305/401 killed (76.1%)",
+      "severity": "info"
+    }
+  ],
+  "gaps": [],
+  "tool_outputs": ".sessi-work/round_1/tools/mutation_testing.json",
+  "reconcile": "tool_first"
+}

@@ -1,0 +1,236 @@
+{
+  "dimension": "architecture",
+  "tool_score": 0,
+  "raw_output": "{\"header\" : {\n  \"cloc_url\"           : \"github.com/AlDanial/cloc\",\n  \"cloc_version\"       : \"2.08\",\n  \"elapsed_seconds\"    : 0.254312992095947,\n  \"n_files\"            : 69,\n  \"n_lines\"            : 116499,\n  \"files_per_second\"   : 271.319209574506,\n  \"lines_per_second\"   : 458092.994148121},\n\"JSON\" :{\n  \"nFiles\": 11,\n  \"blank\": 0,\n  \"comment\": 0,\n  \"code\": 46343},\n\"Python\" :{\n  \"nFiles\": 50,\n  \"blank\": 12900,\n  \"comment\": 13898,\n  \"code\": 42628},\n\"Markdown\" :{\n  \"nFiles\": 5,\n  \"blank\": 168,\n  \"comment\": 0,\n  \"code\": 548},\n\"Text\" :{\n  \"nFiles\": 1,\n  \"blank\": 0,\n  \"comment\": 0,\n  \"code\": 8},\n\"INI\" :{\n  \"nFiles\": 2,\n  \"blank\": 0,\n  \"comment\": 0,\n  \"code\": 6},\n\"SUM\": {\n  \"blank\": 13068,\n  \"comment\": 13898,\n  \"code\": 89533,\n  \"nFiles\": 69} }\n",
+  "findings": [
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "{\"header\" : {",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"cloc_url\"           : \"github.com/AlDanial/cloc\",",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"cloc_version\"       : \"2.08\",",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"elapsed_seconds\"    : 0.254312992095947,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"n_files\"            : 69,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"n_lines\"            : 116499,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"files_per_second\"   : 271.319209574506,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"lines_per_second\"   : 458092.994148121},",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"JSON\" :{",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"nFiles\": 11,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"blank\": 0,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"comment\": 0,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"code\": 46343},",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"Python\" :{",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"nFiles\": 50,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"blank\": 12900,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"comment\": 13898,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"code\": 42628},",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"Markdown\" :{",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"nFiles\": 5,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"blank\": 168,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"comment\": 0,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"code\": 548},",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"Text\" :{",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"nFiles\": 1,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"blank\": 0,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"comment\": 0,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"code\": 8},",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"INI\" :{",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"nFiles\": 2,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"blank\": 0,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"comment\": 0,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"code\": 6},",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"SUM\": {",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"blank\": 13068,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"comment\": 13898,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"code\": 89533,",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "\"nFiles\": 69} }",
+      "severity": "info"
+    }
+  ],
+  "status": "success"
+}

@@ -1,0 +1,308 @@
+{
+  "dimension": "readability",
+  "tool_score": 100,
+  "raw_output": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis.py\n    F 152:0 test_synthesize_segments_with_different_speeds - A\n    F 75:0 test_synthesize_with_voice_and_speed - A\n    F 296:0 test_synthesize_ssml_segments_have_speed - A\n    F 676:0 test_synthesize_segments_many_parallel - A\n    F 46:0 test_synthesize_normal - A\n    F 133:0 test_synthesize_segments_normal - A\n    F 206:0 test_synthesize_segments_skips_empty_text - A\n    F 335:0 test_synthesize_logging_warning_for_empty - A\n    F 346:0 test_synthesize_returns_raw_bytes - A\n    F 362:0 test_synthesize_segments_single_segment - A\n    F 614:0 test_synthesize_ssml_invalid_xml_uses_fallback - A\n    F 765:0 test_synthesize_segments_error_message_format - A\n    F 61:0 test_synthesize_empty_text - A\n    F 68:0 test_synthesize_whitespace_only - A\n    F 126:0 test_synthesize_segments_empty_list - A\n    F 173:0 test_synthesize_segments_partial_failure - A\n    F 190:0 test_synthesize_segments_all_failure - A\n    F 228:0 test_synthesize_text_plain_text - A\n    F 240:0 test_synthesize_text_ssml_triggers_ssml_branch - A\n    F 253:0 test_synthesize_text_empty - A\n    F 264:0 test_synthesize_ssml_valid_ssml - A\n    F 277:0 test_synthesize_ssml_plain_text_fallback - A\n    F 289:0 test_synthesize_ssml_empty - A\n    F 315:0 test_synthesize_text_with_multiple_segments - A\n    F 380:0 test_synthesize_ssml_non_xml_fallback - A\n    F 409:0 test_close_context_manager - A\n    F 425:0 test_synthesize_text_emphasis_ssml - A\n    F 438:0 test_synthesize_text_break_ssml - A\n    F 462:0 test_synthesize_segments_one_empty_bytes_result - A\n    F 485:0 test_synthesize_unicode_text - A\n    F 500:0 test_synthesize_segments_single_chunk - A\n    F 517:0 test_synthesize_ssml_voice_element - A\n    F 534:0 test_synthesize_text_prosody_element - A\n    F 551:0 test_synthesize_calls_linguistic_engine - A\n    F 570:0 test_synthesize_text_empty_after_split - A\n    F 584:0 test_synthesize_ssml_no_segments - A\n    F 602:0 test_synthesize_segments_all_skipped - A\n    F 659:0 test_synthesize_text_xml_declaration_ssml - A\n    F 694:0 test_synthesize_ssml_phoneme_element - A\n    F 711:0 test_synthesize_text_long_text_split - A\n    F 734:0 test_synthesize_mixed_chinese_english - A\n    F 749:0 test_synthesize_speed_float - A\n    F 19:0 engine - A\n    F 29:0 mock_httpx_response - A\n    F 90:0 test_synthesize_httpx_timeout - A\n    F 99:0 test_synthesize_httpx_http_status_error - A\n    F 113:0 test_synthesize_httpx_generic_http_error - A\n    F 397:0 test_close_normal - A\n    F 632:0 test_synthesize_httpx_other_exceptions - A\n    F 641:0 test_synthesize_value_error - A\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_ssml_parser.py\n    M 111:4 TestSSMLParser.test_voice_tag_parsing - B\n    M 62:4 TestSSMLParser.test_parse_with_emphasis - A\n    M 84:4 TestSSMLParser.test_multiple_segments - A\n    M 120:4 TestSSMLParser.test_voice_tag_multiple_switches - A\n    M 132:4 TestSSMLParser.test_voice_tag_in_prosody - A\n    M 145:4 TestSSMLParser.test_voice_tag_attribute_alias - A\n    C 13:0 TestSSMLParser - A\n    M 16:4 TestSSMLParser.test_is_ssml_true - A\n    M 36:4 TestSSMLParser.test_parse_plain_text - A\n    M 22:4 TestSSMLParser.test_is_ssml_false - A\n    M 44:4 TestSSMLParser.test_parse_simple_speak - A\n    M 50:4 TestSSMLParser.test_parse_with_prosody - A\n    M 27:4 TestSSMLParser.test_is_ssml_empty - A\n    M 31:4 TestSSMLParser.test_parse_returns_parsedssml - A\n    M 56:4 TestSSMLParser.test_parse_with_break - A\n    M 69:4 TestSSMLParser.test_parse_phoneme - A\n    M 74:4 TestSSMLParser.test_break_time_medium - A\n    M 79:4 TestSSMLParser.test_break_time_long - A\n    M 96:4 TestSSMLParser.test_strip_comments - A\n    M 101:4 TestSSMLParser.test_strip_xml_declaration - A\n    M 106:4 TestSSMLParser.test_invalid_xml_fallback - A\n/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis_integration.py\n    F 116:0 test_synthesize_success_returns_bytes - A\n    F 132:0 test_synthesize_empty_text_returns_empty_bytes - A\n    F 168:0 test_synthesize_segments_partial_failure_still_returns_audio - A\n    F 213:0 test_synthesize_segments_skips_empty_text - A\n    F 331:0 test_synthesize_segments_concatenates_audio - A\n    F 148:0 test_synthesize_segments_all_fail_raises_runtime_error - A\n    F 204:0 test_synthesize_segments_empty_list_returns_empty - A\n    F 244:0 test_synthesize_text_empty_returns_empty - A\n    F 253:0 test_synthesize_text_plain_text_success - A\n    F 267:0 test_synthesize_text_ssml_fallback_on_parse_failure - A\n    F 283:0 test_synthesize_text_ssml_success - A\n    F 301:0 test_synthesize_ssml_empty_returns_empty - A\n    F 310:0 test_synthesize_ssml_all_segments_fail - A\n    F 358:0 test_synthesize_segments_single_chunk_no_concat_needed - A\n    F 378:0 test_synthesize_text_split_returns_empty_segments - A\n    F 394:0 test_synthesize_ssml_no_segments_after_parse - A\n    F 416:0 test_synthesize_segments_all_skipped - A\n    F 430:0 test_sy",
+  "findings": [
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "/Users/johnny/.openclaw/workspace/tts-kokoro-compare/mutants/tests/test_synthesis.py",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 152:0 test_synthesize_segments_with_different_speeds - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 75:0 test_synthesize_with_voice_and_speed - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 296:0 test_synthesize_ssml_segments_have_speed - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 676:0 test_synthesize_segments_many_parallel - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 46:0 test_synthesize_normal - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 133:0 test_synthesize_segments_normal - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 206:0 test_synthesize_segments_skips_empty_text - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 335:0 test_synthesize_logging_warning_for_empty - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 346:0 test_synthesize_returns_raw_bytes - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 362:0 test_synthesize_segments_single_segment - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 614:0 test_synthesize_ssml_invalid_xml_uses_fallback - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 765:0 test_synthesize_segments_error_message_format - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 61:0 test_synthesize_empty_text - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 68:0 test_synthesize_whitespace_only - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 126:0 test_synthesize_segments_empty_list - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 173:0 test_synthesize_segments_partial_failure - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 190:0 test_synthesize_segments_all_failure - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 228:0 test_synthesize_text_plain_text - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 240:0 test_synthesize_text_ssml_triggers_ssml_branch - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 253:0 test_synthesize_text_empty - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 264:0 test_synthesize_ssml_valid_ssml - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 277:0 test_synthesize_ssml_plain_text_fallback - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 289:0 test_synthesize_ssml_empty - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 315:0 test_synthesize_text_with_multiple_segments - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 380:0 test_synthesize_ssml_non_xml_fallback - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 409:0 test_close_context_manager - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 425:0 test_synthesize_text_emphasis_ssml - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 438:0 test_synthesize_text_break_ssml - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 462:0 test_synthesize_segments_one_empty_bytes_result - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 485:0 test_synthesize_unicode_text - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 500:0 test_synthesize_segments_single_chunk - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 517:0 test_synthesize_ssml_voice_element - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 534:0 test_synthesize_text_prosody_element - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 551:0 test_synthesize_calls_linguistic_engine - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 570:0 test_synthesize_text_empty_after_split - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 584:0 test_synthesize_ssml_no_segments - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 602:0 test_synthesize_segments_all_skipped - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 659:0 test_synthesize_text_xml_declaration_ssml - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 694:0 test_synthesize_ssml_phoneme_element - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 711:0 test_synthesize_text_long_text_split - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 734:0 test_synthesize_mixed_chinese_english - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 749:0 test_synthesize_speed_float - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 19:0 engine - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 29:0 mock_httpx_response - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 90:0 test_synthesize_httpx_timeout - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 99:0 test_synthesize_httpx_http_status_error - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 113:0 test_synthesize_httpx_generic_http_error - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 397:0 test_close_normal - A",
+      "severity": "info"
+    },
+    {
+      "file": "unknown",
+      "line": 0,
+      "message": "F 632:0 test_synthesize_httpx_other_exceptions - A",
+      "severity": "info"
+    }
+  ],
+  "status": "success"
+}
