@@ -208,7 +208,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
         raise
     except Exception as e:
         logger.error("Speech synthesis error: %s", e, exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Synthesis failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Synthesis failed: {str(e)}") from e
 
 
 @router.get("/voices")

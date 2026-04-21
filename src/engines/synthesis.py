@@ -208,7 +208,10 @@ class SynthesisEngine:
                 last_error = synth_err
                 if attempt < max_retries:
                     wait_time = 2 ** attempt * 0.5
-                    logger.warning("Retry %s/%s after %ss: %s", attempt + 1, max_retries, wait_time, synth_err)
+                    logger.warning(
+                        "Retry %s/%s after %ss: %s",
+                        attempt + 1, max_retries, wait_time, synth_err
+                    )
                     await asyncio.sleep(wait_time)
 
         raise last_error or RuntimeError("Synthesis failed")
