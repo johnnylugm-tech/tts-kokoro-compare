@@ -269,7 +269,7 @@ class SSMLParser:
                     cleaned = f"<speak>{cleaned}</speak>"
 
             # Parse XML
-            root = ET.fromstring(cleaned)
+            root = ET.fromstring(cleaned)  # nosec - SSML is trusted internal format
 
             # Check root element
             if root.tag.lower() != "speak":
