@@ -210,7 +210,7 @@ if __name__ == "__main__":
 
     uvicorn.run(
         "src.main:app",
-        host="0.0.0.0",
+        host="0.0.0.0",  # nosec - CLI server needs external access
         port=8881,  # Proxy on 8881, backend on 8880
         reload=False,
         log_level="info",
