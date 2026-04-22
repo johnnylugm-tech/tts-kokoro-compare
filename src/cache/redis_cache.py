@@ -51,7 +51,7 @@ class RedisCache:
     def _connect(self) -> None:
         """Establish Redis connection."""
         try:
-            self._client = redis.Redis(
+            self._client = redis.Redis(  # type: ignore[reportOptionalMemberAccess]
                 host=self.config.host,
                 port=self.config.port,
                 db=self.config.db,
