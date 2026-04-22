@@ -1,9 +1,11 @@
-"""Kokoro Taiwan Proxy - FastAPI Application."""
+#!/usr/bin/env python3
 # Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
+"""Kokoro Taiwan Proxy - FastAPI Application."""
 
 import logging
 from contextlib import asynccontextmanager
 
+import httpx
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -19,24 +21,17 @@ from .config import (
 from .routers import speech
 from .engines.synthesis import SynthesisEngine
 
-# Configure logging
 logging.basicConfig(
     format=LOG_FORMAT,
     level=getattr(logging, LOG_LEVEL),
 )
 logger = logging.getLogger(__name__)
 
-# Global synthesis engine for warmup
 _synthesis_engine: SynthesisEngine | None = None
 
 
 async def warmup_backend() -> bool:
-    """
-    Perform warmup request to load model weights.
-
-    Returns:
-        True if warmup succeeded
-    """
+    """Perform warmup request to load model weights."""
     if not WARMUP_ENABLED:
         logger.info("Warmup disabled")
         return True
@@ -44,10 +39,7 @@ async def warmup_backend() -> bool:
     logger.info("Starting backend warmup...")
 
     try:
-        import httpx
-
         async with httpx.AsyncClient(timeout=30.0) as client:
-            # Warmup with a simple request
             payload = {
                 "model": "kokoro",
                 "input": WARMUP_TEXT,
@@ -74,23 +66,16 @@ async def warmup_backend() -> bool:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Application lifespan manager.
-
-    Handles startup and shutdown events.
-    """
+    """Application lifespan manager."""
     global _synthesis_engine
 
-    # Startup
     logger.info("=" * 50)
     logger.info("Kokoro Taiwan Proxy starting...")
     logger.info("Backend URL: %s", KOKORO_BACKEND_URL)
     logger.info("=" * 50)
 
-    # Initialize synthesis engine
     _synthesis_engine = SynthesisEngine()
 
-    # Warmup backend
     if WARMUP_ENABLED:
         warmup_success = await warmup_backend()
         if not warmup_success:
@@ -100,14 +85,12 @@ async def lifespan(app: FastAPI):
 
     yield
 
-    # Shutdown
     logger.info("Shutting down...")
     if _synthesis_engine:
         await _synthesis_engine.close()
     logger.info("Shutdown complete")
 
 
-# Create FastAPI application
 app = FastAPI(
     title="Kokoro Taiwan Proxy",
     description=(
@@ -118,7 +101,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -128,7 +110,6 @@ app.add_middleware(
 )
 
 
-# Request logging middleware
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     """Log all incoming requests."""
@@ -140,7 +121,6 @@ async def log_requests(request: Request, call_next):
     return response
 
 
-# Global exception handler
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     """Handle uncaught exceptions."""
@@ -151,7 +131,6 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 
-# Include routers
 app.include_router(speech.router)
 
 
@@ -168,17 +147,10 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """
-    Health check endpoint.
-
-    Returns:
-        Health status and backend URL
-    """
-    # Check if backend is reachable
+    """Health check endpoint."""
     backend_reachable = False
 
     try:
-        import httpx
         async with httpx.AsyncClient(timeout=5.0) as client:
             response = await client.get(
                 KOKORO_VOICES_URL,
@@ -197,12 +169,7 @@ async def health_check():
 
 @app.get("/ready")
 async def readiness_check():
-    """
-    Readiness check for Kubernetes/load balancer.
-
-    Returns:
-        Ready status
-    """
+    """Readiness check for Kubernetes/load balancer."""
     return {"ready": True}
 
 
@@ -211,8 +178,8 @@ if __name__ == "__main__":
 
     uvicorn.run(
         "src.main:app",
-        host="0.0.0.0",  # nosec - CLI server needs external access
-        port=8881,  # Proxy on 8881, backend on 8880
+        host="0.0.0.0",  # nosec
+        port=8881,
         reload=False,
         log_level="info",
     )

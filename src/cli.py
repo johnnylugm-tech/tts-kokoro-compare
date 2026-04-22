@@ -16,9 +16,6 @@ import logging
 import sys
 from pathlib import Path
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
 from src.config import (
     DEFAULT_VOICE,
     DEFAULT_SPEED,
@@ -124,7 +121,6 @@ def read_input(args: argparse.Namespace) -> str:
         ValueError: If no input provided
     """
     if args.file:
-        # Read from file
         file_path = Path(args.file)
         if not file_path.exists():
             raise FileNotFoundError(f"Input file not found: {args.file}")
@@ -132,10 +128,8 @@ def read_input(args: argparse.Namespace) -> str:
             return f.read().strip()
 
     if args.input is not None:
-        # Use CLI argument (including empty string - let caller validate)
         return args.input.strip()
 
-    # Try reading from stdin (if piped)
     if not sys.stdin.isatty():
         return sys.stdin.read().strip()
 
@@ -182,28 +176,22 @@ async def main_async(args: argparse.Namespace) -> int:
         Exit code (0 = success)
     """
     try:
-        # Read input
         text = read_input(args)
 
         if not text:
             logger.error("Empty input provided")
             return 1
 
-        # Determine output path
         output_path = Path(args.output)
 
-        # If output is a directory, generate filename
         if output_path.is_dir() or (not output_path.suffix and "." not in output_path.name):
             output_path = output_path / f"output.{args.format}"
 
-        # Ensure parent directory exists
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Initialize synthesis engine
         engine = SynthesisEngine(backend_url=args.backend)
 
         try:
-            # Synthesize
             audio_data = await synthesize(
                 engine,
                 text,
@@ -216,20 +204,17 @@ async def main_async(args: argparse.Namespace) -> int:
                 logger.error("No audio data generated")
                 return 1
 
-            # Write MP3 directly
             if args.format == "mp3":
                 with open(output_path, "wb") as f:
                     f.write(audio_data)
                 logger.info("Saved MP3: %s (%s bytes)", output_path, len(audio_data))
             else:
-                # Convert MP3 to WAV using ffmpeg
                 temp_mp3 = output_path.with_suffix(".mp3")
                 with open(temp_mp3, "wb") as f:
                     f.write(audio_data)
 
                 success = convert_mp3_to_wav(str(temp_mp3), str(output_path))
 
-                # Clean up temp file
                 if temp_mp3.exists():
                     temp_mp3.unlink()
 
