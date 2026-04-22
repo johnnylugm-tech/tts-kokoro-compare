@@ -143,158 +143,130 @@ class TextSplitter:
         return result if result else [text]
 
     def _split_level2(self, text: str, limit: int) -> List[str]:
-        """
-        Level 2 splitting: split by clause separators if text > 100 chars.
-
-        Args:
-            text: Text to split
-            limit: Maximum characters per segment
-
-        Returns:
-            List of segments
-        """
-        # Only use clause splitting if text is significantly over 100 chars
+        """Level 2: split by clause separators if text > 100 chars."""
         if len(text) <= 100:
-            # Just return as-is, let level 3 handle it
             return [text]
 
-        # Check if has clause separators
         if "；" not in text and "：" not in text:
-            # No clause separators, go to level 3
             return self._split_level3(text, limit)
 
-        # Split by clause separators
-        pattern = re.compile(self.CLAUSE_SEPARATORS)
-        parts = pattern.split(text)
+        return self._split_level2_by_clause(text, limit)
 
+    def _split_level2_by_clause(self, text: str, limit: int) -> List[str]:
+        """Core clause-splitting logic."""
+        parts = re.compile(self.CLAUSE_SEPARATORS).split(text)
+        result = self._collect_clause_parts(parts, limit)
+        return self._finalize_segments(result, limit)
+
+    def _collect_clause_parts(self, parts: list, limit: int) -> List[str]:
+        """Collect clause parts into segments."""
         result: List[str] = []
         buffer = ""
-
         for part in parts:
             if not part:
                 continue
-
             if part in ("；", "："):
-                # Attach separator to buffer
                 buffer += part
             else:
                 if buffer and len(buffer) + len(part) > limit:
                     result.append(buffer)
                     buffer = ""
                 buffer += part
-
         if buffer:
             result.append(buffer)
+        return result
 
-        # If segments are still too long, go to level 3
+    def _finalize_segments(self, result: List[str], limit: int) -> List[str]:
+        """Finalize segments, escalating oversized ones."""
         final_result: List[str] = []
         for seg in result:
             if len(seg) <= limit:
                 final_result.append(seg)
             else:
                 final_result.extend(self._split_level3(seg, limit))
-
-        return final_result if final_result else [text]
+        return final_result if final_result else result
 
     def _split_level3(self, text: str, limit: int) -> List[str]:
-        """
-        Level 3 splitting: split by phrase separators.
-
-        Args:
-            text: Text to split
-            limit: Maximum characters per segment
-
-        Returns:
-            List of segments
-        """
-        # Check if has phrase separators
+        """Level 3: split by phrase separators."""
         has_separators = any(c in text for c in "，。、,")
-
         if not has_separators:
-            # No phrase separators, return as is (emergency split will handle)
             return [text]
 
-        # Split by phrase separators
-        pattern = re.compile(self.PHRASE_SEPARATORS)
-        parts = pattern.split(text)
+        return self._split_level3_by_phrase(text, limit)
 
+    def _split_level3_by_phrase(self, text: str, limit: int) -> List[str]:
+        """Core phrase-splitting logic."""
+        parts = re.compile(self.PHRASE_SEPARATORS).split(text)
+        result = self._collect_phrase_parts(parts, limit)
+        return self._finalize_phrase_segments(result, limit)
+
+    def _collect_phrase_parts(self, parts: list, limit: int) -> List[str]:
+        """Collect phrase parts into segments."""
         result: List[str] = []
         buffer = ""
-
         for part in parts:
             if not part:
                 continue
-
             if part in ("，", "。", "、", ","):
-                # Attach separator to buffer
                 buffer += part
             else:
                 if buffer and len(buffer) + len(part) > limit:
                     result.append(buffer)
                     buffer = ""
                 buffer += part
-
         if buffer:
             result.append(buffer)
+        return result
 
-        # If still too long, emergency split
+    def _finalize_phrase_segments(self, result: List[str], limit: int) -> List[str]:
+        """Finalize phrase segments, escalating oversized ones."""
         final_result: List[str] = []
         for seg in result:
             if len(seg) <= limit:
                 final_result.append(seg)
             else:
                 final_result.extend(self._emergency_split(seg, limit))
-
-        return final_result if final_result else [text]
+        return final_result if final_result else result
 
     def _emergency_split(self, text: str, limit: int) -> List[str]:
-        """
-        Emergency split: break by character count without regard for semantics.
-        Used only when no other splitting method works.
-
-        Args:
-            text: Text to split
-            limit: Maximum characters per segment
-
-        Returns:
-            List of segments
-        """
+        """Emergency split: break by character count without regard for semantics."""
         if len(text) <= limit:
             return [text]
 
-        result: List[str] = []
-
-        # Try to split at natural boundaries
-        # First, try sentence endings
         segments = self._split_by_sentence(text)
+        result: List[str] = []
 
         for seg in segments:
             if len(seg) <= limit:
                 result.append(seg)
             else:
-                # Split by words (space-separated)
-                words = seg.split()
-                buffer = ""
-
-                for word in words:
-                    if len(buffer) + len(word) + 1 <= limit:
-                        buffer = (buffer + " " + word).strip()
-                    else:
-                        if buffer:
-                            result.append(buffer)
-                        if len(word) > limit:
-                            # Split long word by chars
-                            for i in range(0, len(word), limit):
-                                chunk = word[i:i+limit]
-                                result.append(chunk)
-                            buffer = ""
-                        else:
-                            buffer = word
-
-                if buffer:
-                    result.append(buffer)
+                result.extend(self._emergency_split_by_words(seg, limit))
 
         return result if result else [text[:limit]]
+
+    def _emergency_split_by_words(self, text: str, limit: int) -> List[str]:
+        """Split a too-long segment by words."""
+        words = text.split()
+        result: List[str] = []
+        buffer = ""
+
+        for word in words:
+            if len(buffer) + len(word) + 1 <= limit:
+                buffer = (buffer + " " + word).strip()
+            else:
+                if buffer:
+                    result.append(buffer)
+                if len(word) > limit:
+                    for i in range(0, len(word), limit):
+                        result.append(word[i:i+limit])
+                    buffer = ""
+                else:
+                    buffer = word
+
+        if buffer:
+            result.append(buffer)
+
+        return result
 
     def split_with_metadata(self, text: str) -> SplitResult:
         """
