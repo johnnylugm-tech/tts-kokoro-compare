@@ -180,10 +180,10 @@ async def generate_speech(request: SpeechRequest) -> Response:
             audio_data: bytes
             if is_ssml:
                 audio_data = await circuit_breaker.call_async(
-                    engine.synthesize_ssml, request.input, voice, speed)
+                    engine.synthesize_ssml, request.input, voice, speed)  # type: ignore[misc]
             else:
                 audio_data = await circuit_breaker.call_async(
-                    engine.synthesize_text, request.input, voice, speed, request.model)
+                    engine.synthesize_text, request.input, voice, speed, request.model)  # type: ignore[misc]
         except CircuitBreakerOpen as exc:
             raise HTTPException(
                 status_code=503,
