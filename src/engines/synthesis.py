@@ -116,46 +116,9 @@ class SynthesisEngine:
             logger.error("Unexpected error during synthesis: %s", e)
             raise
 
-    async def synthesize_segments(
-        self,
-        segments: List[Dict[str, Any]],
-        voice: str = DEFAULT_VOICE,
-        model: str = "kokoro",
-    ) -> bytes:
-        """
-        Synthesize multiple segments in parallel and concatenate.
 
-        Args:
-            segments: List of dicts with "text" and optional "speed"
-            voice: Voice to use for all segments
-            model: Model identifier
-
-        Returns:
-            Concatenated audio bytes
-        """
-        if not segments:
-            return b""
-
-        # Prepare tasks for parallel execution
-        tasks = []
-        for i, seg in enumerate(segments):
-            text = seg.get("text", "")
-            speed = seg.get("speed", DEFAULT_SPEED)
-
-            if text and text.strip():
-                logger.debug("Queuing segment %s: %s... (speed=%s)", i, text[:30], speed)
-                tasks.append(
-                    self._synthesize_segment_with_retry(text, voice, speed, model)
-                )
-
-        if not tasks:
-            return b""
-
-        # Execute all syntheses in parallel
-        logger.info("Starting parallel synthesis of %s segments", len(tasks))
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-
-        # Process results
+    def _collect_and_concatenate(self, results: list) -> bytes:
+        """Collect successful audio chunks and concatenate."""
         audio_chunks: List[bytes] = []
         errors: List[str] = []
 
@@ -165,19 +128,41 @@ class SynthesisEngine:
                 errors.append(f"Segment {i}: {str(result)}")
             elif isinstance(result, bytes) and result:
                 audio_chunks.append(result)
-            elif isinstance(result, Exception):
-                errors.append(f"Segment {i}: {type(result).__name__}")
 
         if not audio_chunks:
             error_msg = f"All segments failed: {'; '.join(errors)}"
             logger.error(error_msg)
             raise RuntimeError(error_msg)
 
-        # Concatenate audio chunks
         final_audio = self._concatenate_audio(audio_chunks)
         logger.info("Concatenated %s audio chunks -> %s bytes", len(audio_chunks), len(final_audio))
-
         return final_audio
+
+    async def synthesize_segments(
+        self,
+        segments: List[Dict[str, Any]],
+        voice: str = DEFAULT_VOICE,
+        model: str = "kokoro",
+    ) -> bytes:
+        """Synthesize multiple segments in parallel and concatenate."""
+        if not segments:
+            return b""
+
+        tasks = [
+            self._synthesize_segment_with_retry(
+                seg["text"], voice, seg.get("speed", DEFAULT_SPEED), model
+            )
+            for seg in segments
+            if seg.get("text", "").strip()
+        ]
+
+        if not tasks:
+            return b""
+
+        logger.info("Starting parallel synthesis of %s segments", len(tasks))
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        return self._collect_and_concatenate(results)
 
     async def _synthesize_segment_with_retry(
         self,
