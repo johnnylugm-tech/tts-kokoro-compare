@@ -225,7 +225,7 @@ class TaiwanLinguisticEngine:
         return result
 
     @classmethod
-    def add_prosody_markers(cls, text: str, speed_adjustments: list) -> str:
+    def add_prosody_markers(cls, text: str, _speed_adjustments: list) -> str:
         """
         Add internal prosody markers for better rhythm.
 

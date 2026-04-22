@@ -1,6 +1,7 @@
 """Circuit Breaker - prevents cascading failures."""
 # Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 
+import asyncio
 import time
 import logging
 from enum import Enum
@@ -244,7 +245,6 @@ def circuit_breaker_decorator(
 
         if asyncio.iscoroutinefunction(func):
             return async_wrapper  # type: ignore[return-value]
-        return wrapper
+        return wrapper  # type: ignore[return-value]
 
-    import asyncio
     return decorator

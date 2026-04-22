@@ -27,7 +27,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-_synthesis_engine: SynthesisEngine | None = None
+_SYNTHESIS_ENGINE: "SynthesisEngine | None" = None
 
 
 async def warmup_backend() -> bool:
@@ -65,16 +65,16 @@ async def warmup_backend() -> bool:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI):
     """Application lifespan manager."""
-    global _synthesis_engine
+    global _SYNTHESIS_ENGINE
 
     logger.info("=" * 50)
     logger.info("Kokoro Taiwan Proxy starting...")
     logger.info("Backend URL: %s", KOKORO_BACKEND_URL)
     logger.info("=" * 50)
 
-    _synthesis_engine = SynthesisEngine()
+    _SYNTHESIS_ENGINE = SynthesisEngine()
 
     if WARMUP_ENABLED:
         warmup_success = await warmup_backend()
@@ -86,8 +86,8 @@ async def lifespan(app: FastAPI):
     yield
 
     logger.info("Shutting down...")
-    if _synthesis_engine:
-        await _synthesis_engine.close()
+    if _SYNTHESIS_ENGINE:
+        await _SYNTHESIS_ENGINE.close()
     logger.info("Shutdown complete")
 
 
@@ -122,7 +122,7 @@ async def log_requests(request: Request, call_next):
 
 
 @app.exception_handler(Exception)
-async def global_exception_handler(request: Request, exc: Exception):
+async def global_exception_handler(_request: Request, exc: Exception):
     """Handle uncaught exceptions."""
     logger.error("Unhandled exception: %s", exc, exc_info=True)
     return JSONResponse(

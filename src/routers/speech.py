@@ -124,11 +124,10 @@ def _get_cached_or_synthesize(cache, engine, circuit_breaker, request, voice, sp
     if cached:
         logger.info("Returning cached audio")
         return cached
-    
+
     if is_ssml:
         return circuit_breaker.call_async(engine.synthesize_ssml, request.input, voice, speed)
-
-        return circuit_breaker.call_async(engine.synthesize_text, request.input, voice, speed, request.model)
+    return circuit_breaker.call_async(engine.synthesize_text, request.input, voice, speed, request.model)
 
 
 async def generate_speech(request: SpeechRequest) -> Response:
