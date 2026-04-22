@@ -3,15 +3,13 @@
 
 import hashlib
 import logging
-from typing import Optional
 from dataclasses import dataclass
+from typing import Optional, Any
 
 try:
     import redis
 except ImportError:
     redis = None  # type: ignore
-
-from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +34,7 @@ class RedisCache:
     for repeated requests.
     """
 
-    def __init__(self, config: Optional[CacheConfig] = None):
+    def __init__(self, config: Optional[CacheConfig] = None) -> None:
         """
         Initialize Redis cache.
 
@@ -61,7 +59,6 @@ class RedisCache:
                 password=self.config.password,
                 decode_responses=False,  # We need bytes for audio
             )
-            # Test connection
             self._client.ping()
             self._connected = True
             logger.info("Redis cache connected: %s:%s", self.config.host, self.config.port)
@@ -74,7 +71,6 @@ class RedisCache:
 
     def _generate_key(self, text: str, voice: str, speed: float, model: str) -> str:
         """Generate cache key from request parameters."""
-        # Create deterministic hash of request
         params = f"{model}:{voice}:{speed}:{text}"
         hash_value = hashlib.sha256(params.encode()).hexdigest()[:16]
         return f"{self.config.prefix}{hash_value}"
@@ -102,9 +98,8 @@ class RedisCache:
             if result:
                 logger.debug("Cache hit: %s", key)
                 return result
-            else:
-                logger.debug("Cache miss: %s", key)
-                return None
+            logger.debug("Cache miss: %s", key)
+            return None
         except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:
             logger.warning("Cache get error: %s", e)
             return None

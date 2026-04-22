@@ -4,6 +4,7 @@
 import logging
 from typing import Optional
 
+import httpx
 from fastapi import APIRouter, HTTPException, Response
 
 from ..models import SpeechRequest
@@ -52,7 +53,7 @@ def get_circuit_breaker() -> CircuitBreaker:
     return _circuit_breaker
 
 
-def get_cache() -> RedisCache:
+def get_cache_instance() -> RedisCache:
     """Get or create cache singleton."""
     global _cache
     if _cache is None:
@@ -114,7 +115,7 @@ async def generate_speech(request: SpeechRequest) -> Response:
     # Get components
     engine = get_synthesis_engine()
     circuit_breaker = get_circuit_breaker()
-    cache = get_cache()
+    cache = get_cache_instance()
 
     # Log request
     logger.info(
@@ -179,11 +180,11 @@ async def generate_speech(request: SpeechRequest) -> Response:
                     speed,
                     request.model,
                 )
-        except CircuitBreakerOpen:
+        except CircuitBreakerOpen as exc:
             raise HTTPException(
                 status_code=503,
                 detail="Backend service unavailable (circuit breaker open)"
-            )
+            ) from exc
 
         if not audio_data:
             raise HTTPException(status_code=500, detail="No audio generated")
@@ -221,7 +222,6 @@ async def list_voices() -> dict:
         Dictionary with list of available voices
     """
     try:
-        import httpx
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(KOKORO_VOICES_URL)
             response.raise_for_status()
@@ -229,7 +229,6 @@ async def list_voices() -> dict:
             return {"voices": voices}
     except (httpx.HTTPError, httpx.TimeoutException, OSError) as e:
         logger.error("Failed to fetch voices: %s", e)
-        # Return default voices as fallback
         return {
             "voices": [
                 {"id": "zf_xiaoxiao", "name": "Xiaoxiao (Taiwan Female)"},

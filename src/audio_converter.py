@@ -6,6 +6,7 @@ Audio Converter - FFmpeg-based audio format conversion (FR-08)
 Provides MP3 to WAV conversion and other audio format transformations.
 """
 
+import json
 import logging
 import shutil
 import subprocess  # nosec B404
@@ -73,7 +74,6 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
         # -ar 44100: sample rate 44100 Hz
         # -ac 2: stereo
         result = subprocess.run(  # nosec
-
             [
                 ffmpeg,
                 "-i", str(input_file),
@@ -95,12 +95,6 @@ def convert_mp3_to_wav(input_path: str, output_path: str) -> bool:
         logger.debug("Converted %s -> %s", input_file, output_file)
         return True
 
-    except RuntimeError as e:
-        logger.error("ffmpeg not available: %s", e)
-        return False
-    except subprocess.SubprocessError as e:
-        logger.error("Subprocess error during conversion: %s", e)
-        return False
     except (RuntimeError, subprocess.SubprocessError, OSError) as e:
         logger.error("Unexpected error during conversion: %s", e)
         return False
@@ -165,8 +159,6 @@ def get_audio_info(file_path: str) -> Optional[dict]:
     Returns:
         Dictionary with audio info (duration, bitrate, format) or None
     """
-    import json
-
     ffprobe_path = shutil.which("ffprobe")
     if ffprobe_path is None:
         return None
