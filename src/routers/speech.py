@@ -26,9 +26,9 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/v1/proxy", tags=["speech"])
 
 # Global instances
-_synthesis_engine: Optional[SynthesisEngine] = None
-_circuit_breaker: Optional[CircuitBreaker] = None
-_cache: Optional[RedisCache] = None
+_SYNTHESIS_ENGINE: "Optional[SynthesisEngine]" = None
+_CIRCUIT_BREAKER: "Optional[CircuitBreaker]" = None
+_CACHE: "Optional[RedisCache]" = None
 _ssml_parser = SSMLParser()
 _text_splitter = TextSplitter()
 _linguistic_engine = TaiwanLinguisticEngine()
@@ -36,29 +36,33 @@ _linguistic_engine = TaiwanLinguisticEngine()
 
 def get_synthesis_engine() -> SynthesisEngine:
     """Get or create synthesis engine singleton."""
-    global _synthesis_engine
-    if _synthesis_engine is None:
-        _synthesis_engine = SynthesisEngine()
-    return _synthesis_engine
+    global _SYNTHESIS_ENGINE
+    if _SYNTHESIS_ENGINE is None:
+        _SYNTHESIS_ENGINE = SynthesisEngine()
+    return _SYNTHESIS_ENGINE
 
 
 def get_circuit_breaker() -> CircuitBreaker:
     """Get or create circuit breaker singleton."""
-    global _circuit_breaker
-    if _circuit_breaker is None:
-        _circuit_breaker = CircuitBreaker(
+    global _CIRCUIT_BREAKER
+    if _CIRCUIT_BREAKER is None:
+        _CIRCUIT_BREAKER = CircuitBreaker(
             threshold=3,
             timeout=10.0,
         )
-    return _circuit_breaker
+    return _CIRCUIT_BREAKER
 
 
 def get_cache_instance() -> RedisCache:
     """Get or create cache singleton."""
-    global _cache
-    if _cache is None:
-        _cache = RedisCache(CacheConfig(enabled=False))  # Disabled by default
-    return _cache
+    global _CACHE
+    if _CACHE is None:
+        _CACHE = RedisCache(CacheConfig(enabled=False))  # Disabled by default
+    return _CACHE
+
+
+# Alias for backward compatibility with tests
+get_cache = get_cache_instance
 
 
 def get_effective_voice(request: SpeechRequest) -> str:
@@ -95,6 +99,38 @@ def get_effective_speed(request: SpeechRequest) -> float:
 
 
 @router.post("/speech")
+
+def _validate_input_length(request) -> None:
+    """Validate input length, raise HTTPException if invalid."""
+    if len(request.input) > 5000:
+        raise HTTPException(status_code=400, detail="Input text too long (max 5000 chars)")
+
+
+def _check_circuit_breaker(circuit_breaker) -> None:
+    """Check circuit breaker state, raise HTTPException if open."""
+    if circuit_breaker.get_state().value == "open":
+        logger.warning("Circuit breaker is open, rejecting request")
+        raise HTTPException(
+            status_code=503,
+            detail="Service temporarily unavailable (circuit breaker open)"
+        )
+
+
+def _get_cached_or_synthesize(cache, engine, circuit_breaker, request, voice, speed, is_ssml) -> bytes:
+    """Check cache, return cached audio or synthesize new audio."""
+    cached = cache.get(
+        text=request.input, voice=voice, speed=speed, model=request.model,
+    )
+    if cached:
+        logger.info("Returning cached audio")
+        return cached
+    
+    if is_ssml:
+        return circuit_breaker.call_async(engine.synthesize_ssml, request.input, voice, speed)
+
+        return circuit_breaker.call_async(engine.synthesize_text, request.input, voice, speed, request.model)
+
+
 async def generate_speech(request: SpeechRequest) -> Response:
     """
     Generate speech audio from text or SSML input.
@@ -117,7 +153,6 @@ async def generate_speech(request: SpeechRequest) -> Response:
     circuit_breaker = get_circuit_breaker()
     cache = get_cache_instance()
 
-    # Log request
     logger.info(
         "Speech request: model=%s, input_len=%s, voice=%s, speed=%s",
         request.model, len(request.input), request.voice, request.speed
@@ -127,59 +162,29 @@ async def generate_speech(request: SpeechRequest) -> Response:
     if not request.input or not request.input.strip():
         raise HTTPException(status_code=400, detail="Empty input text")
 
-    if len(request.input) > 5000:
-        raise HTTPException(status_code=400, detail="Input text too long (max 5000 chars)")
+    _check_circuit_breaker(circuit_breaker)
+    _validate_input_length(request)
 
-    # Check circuit breaker
-    if circuit_breaker.get_state().value == "open":
-        logger.warning("Circuit breaker is open, rejecting request")
-        raise HTTPException(
-            status_code=503,
-            detail="Service temporarily unavailable (circuit breaker open)"
-        )
+    voice = get_effective_voice(request)
+    speed = get_effective_speed(request)
+    is_ssml = _ssml_parser.is_ssml(request.input)
 
     try:
-        # Check cache
         cached_audio = await cache.get(
-            text=request.input,
-            voice=get_effective_voice(request),
-            speed=get_effective_speed(request),
-            model=request.model,
+            text=request.input, voice=voice, speed=speed, model=request.model,
         )
 
         if cached_audio:
-            logger.info("Returning cached audio")
-            return Response(
-                content=cached_audio,
-                media_type="audio/mpeg",
-                headers={"X-Cache": "HIT"},
-            )
+            return Response(content=cached_audio, media_type="audio/mpeg", headers={"X-Cache": "HIT"})
 
-        # Determine effective parameters
-        voice = get_effective_voice(request)
-        speed = get_effective_speed(request)
-
-        # Check if SSML
-        is_ssml = _ssml_parser.is_ssml(request.input)
-
-        # Synthesize using circuit breaker
         try:
             audio_data: bytes
             if is_ssml:
                 audio_data = await circuit_breaker.call_async(
-                    engine.synthesize_ssml,  # type: ignore[arg-type]
-                    request.input,
-                    voice,
-                    speed,
-                )
+                    engine.synthesize_ssml, request.input, voice, speed)
             else:
                 audio_data = await circuit_breaker.call_async(
-                    engine.synthesize_text,  # type: ignore[arg-type]
-                    request.input,
-                    voice,
-                    speed,
-                    request.model,
-                )
+                    engine.synthesize_text, request.input, voice, speed, request.model)
         except CircuitBreakerOpen as exc:
             raise HTTPException(
                 status_code=503,
@@ -189,22 +194,9 @@ async def generate_speech(request: SpeechRequest) -> Response:
         if not audio_data:
             raise HTTPException(status_code=500, detail="No audio generated")
 
-        # Cache the result
-        await cache.set(
-            text=request.input,
-            voice=voice,
-            speed=speed,
-            model=request.model,
-            audio=audio_data,
-        )
-
+        await cache.set(text=request.input, voice=voice, speed=speed, model=request.model, audio=audio_data)
         logger.info("Generated audio: %s bytes", len(audio_data))
-
-        return Response(
-            content=audio_data,
-            media_type="audio/mpeg",
-            headers={"X-Cache": "MISS"},
-        )
+        return Response(content=audio_data, media_type="audio/mpeg", headers={"X-Cache": "MISS"})
 
     except HTTPException:
         raise
