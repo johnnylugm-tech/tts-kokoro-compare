@@ -229,12 +229,11 @@ class SSMLParser:
             return cls._handle_emphasis_tag(child, current_speed, depth)
         if tag_lower == "phoneme":
             return cls._handle_phoneme_tag(child, current_speed)
-        elif tag_lower == "voice":
+        if tag_lower == "voice":
             return cls._handle_voice_tag(child, current_speed, depth)
-        elif tag_lower == "speak":
+        if tag_lower == "speak":
             return cls._handle_speak_tag(child, default_speed, depth)
-        else:
-            return cls._handle_generic_tag(child, current_speed)
+        return cls._handle_generic_tag(child, current_speed)
 
     @classmethod
     def _process_element(cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0) -> List[SSMLSegment]:

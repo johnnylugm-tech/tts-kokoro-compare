@@ -51,7 +51,6 @@ class RedisCache:
     def _connect(self) -> None:
         """Establish Redis connection."""
         try:
-            import redis
             self._client = redis.Redis(
                 host=self.config.host,
                 port=self.config.port,
@@ -194,10 +193,10 @@ class RedisCache:
 
 
 # Singleton instance
-_cache_instance: Optional[RedisCache] = None
+_CACHE_INSTANCE: "Optional[RedisCache]" = None
 
 
-def get_cache(config: Optional[CacheConfig] = None) -> RedisCache:
+def get_cache(config: "Optional[CacheConfig]" = None) -> RedisCache:
     """
     Get or create cache singleton.
 
@@ -207,7 +206,7 @@ def get_cache(config: Optional[CacheConfig] = None) -> RedisCache:
     Returns:
         RedisCache instance
     """
-    global _cache_instance
-    if _cache_instance is None:
-        _cache_instance = RedisCache(config)
-    return _cache_instance
+    global _CACHE_INSTANCE
+    if _CACHE_INSTANCE is None:
+        _CACHE_INSTANCE = RedisCache(config)
+    return _CACHE_INSTANCE
