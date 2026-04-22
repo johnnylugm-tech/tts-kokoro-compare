@@ -99,7 +99,7 @@ class RedisCache:
                 return result
             logger.debug("Cache miss: %s", key)
             return None
-        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess]
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess,reportOptionalMemberAccess]
             logger.warning("Cache get error: %s", e)
             return None
 
@@ -136,7 +136,7 @@ class RedisCache:
             )
             logger.debug("Cached: %s (%s bytes)", key, len(audio))
             return True
-        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess]
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess,reportOptionalMemberAccess]
             logger.warning("Cache set error: %s", e)
             return False
 
@@ -160,7 +160,7 @@ class RedisCache:
             key = self._generate_key(text, voice, speed, model)
             self._client.delete(key)
             return True
-        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess]
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess,reportOptionalMemberAccess]
             logger.warning("Cache delete error: %s", e)
             return False
 
@@ -180,7 +180,7 @@ class RedisCache:
             if keys:
                 return self._client.delete(*keys)
             return 0
-        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess]
+        except (redis.RedisError, redis.ConnectionError, redis.TimeoutError, OSError) as e:  # type: ignore[reportAttributeAccess,reportOptionalMemberAccess]
             logger.warning("Cache clear error: %s", e)
             return 0
 

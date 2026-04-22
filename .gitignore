@@ -49,3 +49,12 @@ htmlcov/
 *.tmp
 .venv/
 *.mp3
+
+# Mutation testing artifacts
+mutants/
+.mutmutrc
+
+# Session work data
+.sessi-work/
+.coverage.*
+mutants/tests/test_audio_converter_behavioral.py
