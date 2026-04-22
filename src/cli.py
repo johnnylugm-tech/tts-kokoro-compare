@@ -161,73 +161,60 @@ async def synthesize(
 
     if is_ssml:
         return await engine.synthesize_ssml(text, voice, speed)
-    else:
-        return await engine.synthesize_text(text, voice, speed)
+    return await engine.synthesize_text(text, voice, speed)
+
+
+def _resolve_output_path(output_arg: str, fmt: str) -> Path:
+    """Resolve output path from CLI argument."""
+    output_path = Path(output_arg)
+    if output_path.is_dir() or (not output_path.suffix and "." not in output_path.name):
+        output_path = output_path / f"output.{fmt}"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    return output_path
+
+
+def _write_audio(output_path: Path, audio_data: bytes, fmt: str) -> bool:
+    """Write audio data to file, handling format conversion."""
+    if fmt == "mp3":
+        with open(output_path, "wb") as f:
+            f.write(audio_data)
+        return True
+    # WAV: convert via temp MP3
+    temp_mp3 = output_path.with_suffix(".mp3")
+    with open(temp_mp3, "wb") as f:
+        f.write(audio_data)
+    success = convert_mp3_to_wav(str(temp_mp3), str(output_path))
+    if temp_mp3.exists():
+        temp_mp3.unlink()
+    return success
 
 
 async def main_async(args: argparse.Namespace) -> int:
-    """
-    Async main entry point.
-
-    Args:
-        args: Parsed command line arguments
-
-    Returns:
-        Exit code (0 = success)
-    """
+    """Async main entry point."""
     try:
         text = read_input(args)
-
         if not text:
             logger.error("Empty input provided")
             return 1
 
-        output_path = Path(args.output)
-
-        if output_path.is_dir() or (not output_path.suffix and "." not in output_path.name):
-            output_path = output_path / f"output.{args.format}"
-
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-
+        output_path = _resolve_output_path(args.output, args.format)
         engine = SynthesisEngine(backend_url=args.backend)
 
         try:
-            audio_data = await synthesize(
-                engine,
-                text,
-                args.voice,
-                args.speed,
-                args.ssml,
-            )
-
+            audio_data = await synthesize(engine, text, args.voice, args.speed, args.ssml)
             if not audio_data:
                 logger.error("No audio data generated")
                 return 1
 
-            if args.format == "mp3":
-                with open(output_path, "wb") as f:
-                    f.write(audio_data)
-                logger.info("Saved MP3: %s (%s bytes)", output_path, len(audio_data))
-            else:
-                temp_mp3 = output_path.with_suffix(".mp3")
-                with open(temp_mp3, "wb") as f:
-                    f.write(audio_data)
+            if not _write_audio(output_path, audio_data, args.format):
+                logger.error("Audio write/conversion failed")
+                return 1
 
-                success = convert_mp3_to_wav(str(temp_mp3), str(output_path))
-
-                if temp_mp3.exists():
-                    temp_mp3.unlink()
-
-                if not success:
-                    logger.error("FFmpeg conversion failed")
-                    return 1
-
-                logger.info("Saved WAV: %s", output_path)
+            logger.info("Saved %s: %s", args.format.upper(), output_path)
+            return 0
 
         finally:
             await engine.close()
-
-        return 0
 
     except FileNotFoundError as e:
         logger.error("File error: %s", e)
@@ -235,9 +222,10 @@ async def main_async(args: argparse.Namespace) -> int:
     except ValueError as e:
         logger.error("Input error: %s", e)
         return 1
-    except (ValueError, IOError, OSError) as e:
+    except (IOError, OSError) as e:
         logger.error("Synthesis error: %s", e, exc_info=True)
         return 1
+
 
 
 def main() -> int:
