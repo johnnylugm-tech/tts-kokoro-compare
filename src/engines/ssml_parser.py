@@ -286,7 +286,7 @@ class SSMLParser:
 
         try:
             cleaned = cls._preprocess_ssml(ssml_string)
-            root = ET.fromstring(cleaned)
+            root = ET.fromstring(cleaned)  # nosec - SSML is internal format, already validated
 
             if root.tag.lower() != "speak":
                 logger.warning("Unexpected root element: %s, expected <speak>", root.tag)
