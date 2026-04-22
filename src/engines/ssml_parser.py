@@ -102,14 +102,13 @@ class SSMLParser:
         # Map duration to pause characters
         if value < 200:
             return " "
-        elif value < 500:
+        if value < 500:
             return "，"
-        elif value < 1000:
+        if value < 1000:
             return "。"
-        elif value < 2000:
+        if value < 2000:
             return "。。。"
-        else:
-            return "......"
+        return "......"
 
     @classmethod
     def _process_break(cls, element: ET.Element, current_speed: float) -> SSMLSegment | None:
@@ -177,56 +176,80 @@ class SSMLParser:
             seg.voice = voice_name
         return child_segments
 
+
     @classmethod
-    def _process_element(
-        cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0
-    ) -> List[SSMLSegment]:
-        """
-        Recursively process an XML element and its children.
+    def _handle_break_tag(cls, child, current_speed) -> List[SSMLSegment]:
+        """Handle <break> tag."""
+        seg = cls._process_break(child, current_speed)
+        return [seg] if seg else []
 
-        Args:
-            element: XML element to process
-            default_speed: Default speech speed
-            depth: recursion depth for debugging
+    @classmethod
+    def _handle_prosody_tag(cls, child, current_speed, depth) -> List[SSMLSegment]:
+        """Handle <prosody> tag."""
+        _, child_segments = cls._process_prosody(child, current_speed, depth)
+        return child_segments
 
-        Returns:
-            List of SSMLSegment objects
-        """
+    @classmethod
+    def _handle_emphasis_tag(cls, child, current_speed, depth) -> List[SSMLSegment]:
+        """Handle <emphasis> tag."""
+        return cls._process_emphasis(child, current_speed, depth)
+
+    @classmethod
+    def _handle_phoneme_tag(cls, child, current_speed) -> List[SSMLSegment]:
+        """Handle <phoneme> tag."""
+        seg = cls._process_phoneme(child, current_speed)
+        return [seg] if seg else []
+
+    @classmethod
+    def _handle_voice_tag(cls, child, current_speed, depth) -> List[SSMLSegment]:
+        """Handle <voice> tag."""
+        return cls._process_voice(child, current_speed, depth)
+
+    @classmethod
+    def _handle_speak_tag(cls, child, default_speed, depth) -> List[SSMLSegment]:
+        """Handle <speak> tag."""
+        return cls._process_element(child, default_speed, depth + 1)
+
+    @classmethod
+    def _handle_generic_tag(cls, child, current_speed) -> List[SSMLSegment]:
+        """Handle unknown tags."""
+        if child.text:
+            return [SSMLSegment(text=child.text.strip(), speed=current_speed)]
+        return []
+
+    @classmethod
+    def _dispatch_tag(cls, child, current_speed, default_speed, depth) -> List[SSMLSegment]:
+        """Dispatch to appropriate tag handler."""
+        tag_lower = child.tag.lower()
+        if tag_lower == "break":
+            return cls._handle_break_tag(child, current_speed)
+        if tag_lower == "prosody":
+            return cls._handle_prosody_tag(child, current_speed, depth)
+        if tag_lower == "emphasis":
+            return cls._handle_emphasis_tag(child, current_speed, depth)
+        if tag_lower == "phoneme":
+            return cls._handle_phoneme_tag(child, current_speed)
+        elif tag_lower == "voice":
+            return cls._handle_voice_tag(child, current_speed, depth)
+        elif tag_lower == "speak":
+            return cls._handle_speak_tag(child, default_speed, depth)
+        else:
+            return cls._handle_generic_tag(child, current_speed)
+
+    @classmethod
+    def _process_element(cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0) -> List[SSMLSegment]:
+        """Recursively process an XML element and its children."""
         segments: List[SSMLSegment] = []
         current_speed = default_speed
 
-        # Get text content from the element itself (before any children)
         if element.text:
             text_content = element.text.strip()
             if text_content:
                 segments.append(SSMLSegment(text=text_content, speed=current_speed))
 
         for child in element:
-            tag_lower = child.tag.lower()
-
-            if tag_lower == "break":
-                seg = cls._process_break(child, current_speed)
-                if seg:
-                    segments.append(seg)
-            elif tag_lower == "prosody":
-                _, child_segments = cls._process_prosody(child, current_speed, depth)
-                segments.extend(child_segments)
-            elif tag_lower == "emphasis":
-                child_segments = cls._process_emphasis(child, current_speed, depth)
-                segments.extend(child_segments)
-            elif tag_lower == "phoneme":
-                seg = cls._process_phoneme(child, current_speed)
-                if seg:
-                    segments.append(seg)
-            elif tag_lower == "voice":
-                child_segments = cls._process_voice(child, current_speed, depth)
-                segments.extend(child_segments)
-            elif tag_lower == "speak":
-                child_segments = cls._process_element(child, default_speed, depth + 1)
-                segments.extend(child_segments)
-            else:
-                if child.text:
-                    segments.append(SSMLSegment(text=child.text.strip(), speed=current_speed))
+            tag_segments = cls._dispatch_tag(child, current_speed, default_speed, depth)
+            segments.extend(tag_segments)
 
             if child.tail and child.tail.strip():
                 tail_text = child.tail.strip()
@@ -235,60 +258,46 @@ class SSMLParser:
 
         return segments
 
+
+
+
+    @classmethod
+    def _preprocess_ssml(cls, ssml_string: str) -> str:
+        """Preprocess SSML: remove declaration/comments, wrap in speak tag."""
+        cleaned = cls._remove_xml_declaration(ssml_string)
+        cleaned = cls._remove_comments(cleaned)
+        cleaned_stripped = cleaned.strip()
+        if not cleaned_stripped.lower().startswith("<speak"):
+            first_tag_match = re.match(r"<(\w+)", cleaned_stripped)
+            if first_tag_match:
+                _ = first_tag_match.group(1)
+                cleaned = f"<speak>{cleaned}</speak>"
+            else:
+                cleaned = f"<speak>{cleaned}</speak>"
+        return cleaned
+
     @classmethod
     def parse(cls, ssml_string: str) -> ParsedSSML:
-        """
-        Parse SSML string into structured data.
-
-        Args:
-            ssml_string: SSML markup string
-
-        Returns:
-            ParsedSSML object with parsed content
-        """
+        """Parse SSML string into structured data."""
         if not ssml_string or not ssml_string.strip():
             return ParsedSSML(input_text="", is_ssml=False)
 
-        # Check if actually SSML
         if not cls.is_ssml(ssml_string):
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
 
         try:
-            # Preprocess: remove XML declaration and comments
-            cleaned = cls._remove_xml_declaration(ssml_string)
-            cleaned = cls._remove_comments(cleaned)
+            cleaned = cls._preprocess_ssml(ssml_string)
+            root = ET.fromstring(cleaned)
 
-            # Wrap in speak tag if not present
-            cleaned_stripped = cleaned.strip()
-            if not cleaned_stripped.lower().startswith("<speak"):
-                # Find first tag
-                first_tag_match = re.match(r"<(\w+)", cleaned_stripped)
-                if first_tag_match:
-                    _ = first_tag_match.group(1)  # extract tag name but don't use
-                    cleaned = f"<speak>{cleaned}</speak>"
-                else:
-                    cleaned = f"<speak>{cleaned}</speak>"
-
-            # Parse XML
-            root = ET.fromstring(cleaned)  # nosec - SSML is trusted internal format
-
-            # Check root element
             if root.tag.lower() != "speak":
                 logger.warning("Unexpected root element: %s, expected <speak>", root.tag)
                 return ParsedSSML(input_text=ssml_string, is_ssml=False)
 
-            # Extract global attributes
             global_speed = 1.0
             global_voice = root.get("voice") or None
-
-            # Process the speak element
             segments = cls._process_element(root, global_speed)
 
-            # Combine all text segments
-            combined_text = ""
-            for seg in segments:
-                combined_text += seg.text + seg.pause_chars
-
+            combined_text = "".join(seg.text + seg.pause_chars for seg in segments)
             return ParsedSSML(
                 input_text=combined_text.strip(),
                 speed=global_speed,
@@ -300,7 +309,7 @@ class SSMLParser:
         except ET.ParseError as e:
             logger.warning("SSML parsing failed, falling back to plain text: %s", e)
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
-        except (ET.ParseError, ValueError, OSError) as e:
+        except (ValueError, OSError) as e:
             logger.error("Unexpected error parsing SSML: %s", e)
             return ParsedSSML(input_text=ssml_string, is_ssml=False)
 
