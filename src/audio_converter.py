@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 """
-Audio Converter - FFmpeg-based audio format conversion (FR-08)
+Audio Converter - FFmpeg-based audio format conversion (FR-08).
 
 Provides MP3 to WAV conversion and other audio format transformations.
 """

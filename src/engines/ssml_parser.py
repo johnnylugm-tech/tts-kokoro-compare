@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class SSMLSegment:
     """Represents a segment of parsed SSML content."""
+
     text: str = ""
     speed: float = 1.0
     pause_chars: str = ""
@@ -22,6 +23,7 @@ class SSMLSegment:
 @dataclass
 class ParsedSSML:
     """Result of SSML parsing."""
+
     input_text: str = ""
     speed: float = 1.0
     voice: Optional[str] = None

@@ -12,13 +12,14 @@ logger = logging.getLogger(__name__)
 @dataclass
 class SplitResult:
     """Result of text splitting operation."""
+
     segments: List[str]
     total_segments: int
     avg_segment_length: float
 
 
 class TextSplitter:
-    """
+    r"""
     Intelligent text splitter with 3-level recursive segmentation.
 
     Level 1 (Sentence): 。？！!?\n

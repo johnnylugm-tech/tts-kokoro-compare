@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class CacheConfig:
     """Configuration for Redis cache."""
+
     enabled: bool = False
     host: str = "localhost"
     port: int = 6379
