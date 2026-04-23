@@ -164,13 +164,8 @@ class SynthesisEngine:
 
         return self._collect_and_concatenate(results)
 
-    async def _synthesize_segment_with_retry(
-        self,
-        text: str,
-        voice: str,
-        speed: float,
-        model: str,
-        max_retries: int = 2,
+    async def _synthesize_segment_with_retry(  # pylint: disable=too-many-arguments
+        self, text: str, voice: str, speed: float, model: str, max_retries: int = 2,
     ) -> bytes:
         """
         Synthesize a segment with retry logic.

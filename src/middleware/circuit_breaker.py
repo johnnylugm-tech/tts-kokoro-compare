@@ -40,7 +40,7 @@ class CircuitBreakerOpen(Exception):
         super().__init__(self.message)
 
 
-class CircuitBreaker:
+class CircuitBreaker:  # pylint: disable=too-many-instance-attributes
     """
     Circuit breaker pattern implementation.
 

@@ -116,6 +116,7 @@ def _check_circuit_breaker(circuit_breaker) -> None:
         )
 
 
+# pylint: disable=too-many-arguments,too-many-positional-arguments,line-too-long
 def _get_cached_or_synthesize(cache, engine, circuit_breaker, request, voice, speed, is_ssml) -> bytes:
     """Check cache, return cached audio or synthesize new audio."""
     cached = cache.get(
