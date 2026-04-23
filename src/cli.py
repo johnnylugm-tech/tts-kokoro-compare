@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (c) 2026 Johnny Lu. Licensed under MIT License.
 """
-CLI Tool for Kokoro Taiwan TTS - FR-07
+CLI Tool for Kokoro Taiwan TTS - FR-07.
 
 Usage:
     tts-v610 "你好世界" -o output.mp3
@@ -229,7 +229,7 @@ async def main_async(args: argparse.Namespace) -> int:
 
 
 def main() -> int:
-    """Main entry point."""
+    """Run the CLI entry point."""
     args = parse_args()
     return asyncio.run(main_async(args))
 

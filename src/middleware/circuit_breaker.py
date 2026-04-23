@@ -16,6 +16,7 @@ T = TypeVar("T")
 
 class CircuitState(Enum):
     """Circuit breaker states."""
+
     CLOSED = "closed"  # Normal operation
     OPEN = "open"  # Failing, reject requests
     HALF_OPEN = "half_open"  # Testing if service recovered
@@ -24,6 +25,7 @@ class CircuitState(Enum):
 @dataclass
 class CircuitBreakerConfig:
     """Configuration for circuit breaker."""
+
     threshold: int = 3  # Failures before opening
     timeout: float = 10.0  # Seconds before half-open
     expected_exceptions: tuple = (Exception,)
@@ -31,7 +33,9 @@ class CircuitBreakerConfig:
 
 class CircuitBreakerOpen(Exception):
     """Exception raised when circuit breaker is open."""
+
     def __init__(self, message: str = "Circuit breaker is open"):
+        """Initialize the exception with a message."""
         self.message = message
         super().__init__(self.message)
 
@@ -218,7 +222,7 @@ def circuit_breaker_decorator(
     expected_exceptions: tuple = (Exception,),
 ):
     """
-    Decorator to add circuit breaker to a function.
+    Decorate a function with circuit breaker pattern.
 
     Args:
         threshold: Number of failures before opening
