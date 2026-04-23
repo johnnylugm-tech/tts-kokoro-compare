@@ -1,10 +1,10 @@
 {
-  "tool_score": 100,
-  "llm_score": 100,
-  "score": 100,
-  "findings": [],
   "dimension": "type_safety",
   "round": 1,
-  "llm_tier": 1,
-  "tool_outputs": ".sessi-work/round_1/tools/type_safety.json"
+  "tool_score": 100.0,
+  "llm_score": 100.0,
+  "score": 100.0,
+  "findings": [],
+  "tool_outputs": ".sessi-work/round_1/tools/type_safety.txt",
+  "reconcile": "tool_first"
 }

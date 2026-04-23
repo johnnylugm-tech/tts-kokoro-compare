@@ -1,10 +1,25 @@
 {
-  "tool_score": 80,
-  "llm_score": 80,
-  "score": 80,
-  "findings": [],
   "dimension": "readability",
   "round": 1,
-  "llm_tier": 3,
-  "tool_outputs": ".sessi-work/round_1/tools/readability.json"
+  "tool_score": 95,
+  "llm_score": 95,
+  "score": 95,
+  "findings": [
+    {
+      "file": "src/models.py",
+      "line": 9,
+      "severity": "medium",
+      "message": "D204: 1 blank line required after class docstring",
+      "evidence": "pydocstyle D204"
+    },
+    {
+      "file": "src/models.py",
+      "line": 20,
+      "severity": "medium",
+      "message": "D204: 1 blank line required after class docstring",
+      "evidence": "pydocstyle D204"
+    }
+  ],
+  "tool_outputs": ".sessi-work/round_1/tools/readability.txt",
+  "reconcile": "tool_first"
 }

@@ -1,10 +1,10 @@
 {
+  "dimension": "security",
+  "round": 1,
   "tool_score": 100,
   "llm_score": 100,
   "score": 100,
   "findings": [],
-  "dimension": "security",
-  "round": 1,
-  "llm_tier": 2,
-  "tool_outputs": ".sessi-work/round_1/tools/security.json"
+  "tool_outputs": ".sessi-work/round_1/tools/security.txt",
+  "reconcile": "tool_first"
 }

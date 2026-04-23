@@ -1,10 +1,18 @@
 {
-  "tool_score": 70,
-  "llm_score": 70,
-  "score": 70,
-  "findings": [],
   "dimension": "architecture",
   "round": 1,
-  "llm_tier": 3,
-  "tool_outputs": ".sessi-work/round_1/tools/architecture.json"
+  "tool_score": 82,
+  "llm_score": 82,
+  "score": 82,
+  "findings": [
+    {
+      "file": null,
+      "line": null,
+      "severity": "high",
+      "message": "RedisCache class is hub node (risk=0.8) with no explicit unit tests - untested hotspot",
+      "evidence": "CRG detect-changes: risk_score=0.85, hub class"
+    }
+  ],
+  "tool_outputs": ".sessi-work/round_1/tools/architecture.txt",
+  "reconcile": "tool_first"
 }

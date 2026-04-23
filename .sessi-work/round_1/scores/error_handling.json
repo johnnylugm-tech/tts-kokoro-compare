@@ -1,10 +1,10 @@
 {
-  "tool_score": 100,
-  "llm_score": 100,
-  "score": 100,
-  "findings": [],
   "dimension": "error_handling",
   "round": 1,
-  "llm_tier": 3,
-  "tool_outputs": ".sessi-work/round_1/tools/error_handling.json"
+  "tool_score": 85,
+  "llm_score": 85,
+  "score": 85,
+  "findings": [],
+  "tool_outputs": ".sessi-work/round_1/tools/error_handling.txt",
+  "reconcile": "tool_first"
 }

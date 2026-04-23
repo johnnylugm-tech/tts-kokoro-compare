@@ -1,10 +1,25 @@
 {
-  "tool_score": 50,
-  "llm_score": 50,
-  "score": 50,
-  "findings": [],
   "dimension": "mutation_testing",
   "round": 1,
-  "llm_tier": 1,
-  "tool_outputs": ".sessi-work/round_1/tools/mutation_testing.json"
+  "tool_score": 47,
+  "llm_score": 47,
+  "score": 47,
+  "findings": [
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 55,
+      "severity": "high",
+      "message": "RedisCache has 0% mutation coverage - critical untested class",
+      "evidence": "pytest-gremlins: 0 killed from redis_cache mutations"
+    },
+    {
+      "file": "src/engines/synthesis.py",
+      "line": 55,
+      "severity": "medium",
+      "message": "SynthesisEngine.synthesize has low mutation kill rate",
+      "evidence": "pytest-gremlins: low kill rate in synthesis"
+    }
+  ],
+  "tool_outputs": ".sessi-work/round_1/tools/mutation_testing.txt",
+  "reconcile": "tool_first"
 }

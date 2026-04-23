@@ -1,10 +1,10 @@
 {
-  "tool_score": 100,
-  "llm_score": 100,
-  "score": 100,
-  "findings": [],
   "dimension": "performance",
   "round": 1,
-  "llm_tier": 3,
-  "tool_outputs": ".sessi-work/round_1/tools/performance.json"
+  "tool_score": 80,
+  "llm_score": 80,
+  "score": 80,
+  "findings": [],
+  "tool_outputs": ".sessi-work/round_1/tools/performance.txt",
+  "reconcile": "tool_first"
 }

@@ -1,10 +1,10 @@
 {
+  "dimension": "license_compliance",
+  "round": 1,
   "tool_score": 100,
   "llm_score": 100,
   "score": 100,
   "findings": [],
-  "dimension": "license_compliance",
-  "round": 1,
-  "llm_tier": 1,
-  "tool_outputs": ".sessi-work/round_1/tools/license_compliance.json"
+  "tool_outputs": ".sessi-work/round_1/tools/license_compliance.txt",
+  "reconcile": "tool_first"
 }

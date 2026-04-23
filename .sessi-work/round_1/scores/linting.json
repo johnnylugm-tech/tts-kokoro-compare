@@ -1,257 +1,46 @@
 {
-  "tool_score": 0,
-  "llm_score": 0,
-  "score": 0,
-  "findings": [
-    {
-      "file": "src/audio_converter.py",
-      "line": 104,
-      "message": "Catching previously caught exception type RuntimeError",
-      "severity": "info"
-    },
-    {
-      "file": "src/audio_converter.py",
-      "line": 104,
-      "message": "Catching previously caught exception type SubprocessError",
-      "severity": "info"
-    },
-    {
-      "file": "src/audio_converter.py",
-      "line": 168,
-      "message": "Import outside toplevel (json)",
-      "severity": "info"
-    },
-    {
-      "file": "src/cli.py",
-      "line": 22,
-      "message": "Import \"from src.config import DEFAULT_VOICE, DEFAULT_SPEED, KOKORO_BACKEND_URL\" should be placed at the top of the module",
-      "severity": "info"
-    },
-    {
-      "file": "src/cli.py",
-      "line": 27,
-      "message": "Import \"from src.engines.synthesis import SynthesisEngine\" should be placed at the top of the module",
-      "severity": "info"
-    },
-    {
-      "file": "src/cli.py",
-      "line": 28,
-      "message": "Import \"from src.audio_converter import convert_mp3_to_wav\" should be placed at the top of the module",
-      "severity": "info"
-    },
-    {
-      "file": "src/cli.py",
-      "line": 168,
-      "message": "Unnecessary \"else\" after \"return\", remove the \"else\" and de-indent the code inside it",
-      "severity": "info"
-    },
-    {
-      "file": "src/cli.py",
-      "line": 253,
-      "message": "Catching previously caught exception type ValueError",
-      "severity": "info"
-    },
-    {
-      "file": "src/cli.py",
-      "line": 174,
-      "message": "Too many return statements (7/6)",
-      "severity": "info"
-    },
-    {
-      "file": "src/main.py",
-      "line": 30,
-      "message": "Constant name \"_synthesis_engine\" doesn't conform to UPPER_CASE naming style",
-      "severity": "info"
-    },
-    {
-      "file": "src/main.py",
-      "line": 47,
-      "message": "Import outside toplevel (httpx)",
-      "severity": "info"
-    },
-    {
-      "file": "src/main.py",
-      "line": 76,
-      "message": "Redefining name 'app' from outer scope (line 111)",
-      "severity": "info"
-    },
-    {
-      "file": "src/main.py",
-      "line": 82,
-      "message": "Using the global statement",
-      "severity": "info"
-    },
-    {
-      "file": "src/main.py",
-      "line": 76,
-      "message": "Unused argument 'app'",
-      "severity": "info"
-    },
-    {
-      "file": "src/main.py",
-      "line": 145,
-      "message": "Unused argument 'request'",
-      "severity": "info"
-    },
-    {
-      "file": "src/main.py",
-      "line": 181,
-      "message": "Import outside toplevel (httpx)",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 28,
-      "message": "Constant name \"_synthesis_engine\" doesn't conform to UPPER_CASE naming style",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 29,
-      "message": "Constant name \"_circuit_breaker\" doesn't conform to UPPER_CASE naming style",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 30,
-      "message": "Constant name \"_cache\" doesn't conform to UPPER_CASE naming style",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 38,
-      "message": "Using the global statement",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 46,
-      "message": "Using the global statement",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 57,
-      "message": "Using the global statement",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 183,
-      "message": "Consider explicitly re-raising using 'except CircuitBreakerOpen as exc' and 'raise HTTPException(status_code=503, detail='Backend service unavailable (circuit breaker open)') from exc'",
-      "severity": "info"
-    },
-    {
-      "file": "src/routers/speech.py",
-      "line": 224,
-      "message": "Import outside toplevel (httpx)",
-      "severity": "info"
-    },
-    {
-      "file": "src/middleware/circuit_breaker.py",
-      "line": 38,
-      "message": "Too many instance attributes (9/7)",
-      "severity": "info"
-    },
-    {
-      "file": "src/middleware/circuit_breaker.py",
-      "line": 249,
-      "message": "Import outside toplevel (asyncio)",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 56,
-      "message": "Redefining name 'redis' from outer scope (line 10)",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 56,
-      "message": "Import outside toplevel (redis)",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 102,
-      "message": "Unnecessary \"else\" after \"return\", remove the \"else\" and de-indent the code inside it",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 112,
-      "message": "Too many arguments (6/5)",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 112,
-      "message": "Too many positional arguments (6/5)",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 202,
-      "message": "Constant name \"_cache_instance\" doesn't conform to UPPER_CASE naming style",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 215,
-      "message": "Using the global statement",
-      "severity": "info"
-    },
-    {
-      "file": "src/cache/redis_cache.py",
-      "line": 14,
-      "message": "Imports from package typing are not grouped",
-      "severity": "info"
-    },
-    {
-      "file": "src/engines/taiwan_linguistic.py",
-      "line": 228,
-      "message": "Unused argument 'speed_adjustments'",
-      "severity": "info"
-    },
-    {
-      "file": "src/engines/ssml_parser.py",
-      "line": 103,
-      "message": "Unnecessary \"elif\" after \"return\", remove the leading \"el\" from \"elif\"",
-      "severity": "info"
-    },
-    {
-      "file": "src/engines/ssml_parser.py",
-      "line": 77,
-      "message": "Too many return statements (7/6)",
-      "severity": "info"
-    },
-    {
-      "file": "src/engines/ssml_parser.py",
-      "line": 181,
-      "message": "Too many branches (14/12)",
-      "severity": "info"
-    },
-    {
-      "file": "src/engines/text_splitter.py",
-      "line": 271,
-      "message": "Too many nested blocks (6/5)",
-      "severity": "info"
-    },
-    {
-      "file": "src/engines/synthesis.py",
-      "line": 182,
-      "message": "Too many arguments (6/5)",
-      "severity": "info"
-    },
-    {
-      "file": "src/engines/synthesis.py",
-      "line": 182,
-      "message": "Too many positional arguments (6/5)",
-      "severity": "info"
-    }
-  ],
   "dimension": "linting",
   "round": 1,
-  "llm_tier": 1,
-  "tool_outputs": ".sessi-work/round_1/tools/linting.json"
+  "tool_score": 97.5,
+  "llm_score": 97.5,
+  "score": 97.5,
+  "findings": [
+    {
+      "file": "src/main.py",
+      "line": 70,
+      "severity": "medium",
+      "message": "Using global statement",
+      "evidence": "pylint: warning"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 39,
+      "severity": "medium",
+      "message": "Using global statement",
+      "evidence": "pylint: warning"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 47,
+      "severity": "medium",
+      "message": "Using global statement",
+      "evidence": "pylint: warning"
+    },
+    {
+      "file": "src/routers/speech.py",
+      "line": 58,
+      "severity": "medium",
+      "message": "Using global statement",
+      "evidence": "pylint: warning"
+    },
+    {
+      "file": "src/cache/redis_cache.py",
+      "line": 209,
+      "severity": "medium",
+      "message": "Using global statement",
+      "evidence": "pylint: warning"
+    }
+  ],
+  "tool_outputs": ".sessi-work/round_1/tools/linting.txt",
+  "reconcile": "tool_first"
 }

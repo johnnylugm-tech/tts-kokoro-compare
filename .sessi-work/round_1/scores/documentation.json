@@ -1,10 +1,32 @@
 {
-  "tool_score": 70,
-  "llm_score": 70,
-  "score": 70,
-  "findings": [],
   "dimension": "documentation",
   "round": 1,
-  "llm_tier": 3,
-  "tool_outputs": ".sessi-work/round_1/tools/documentation.json"
+  "tool_score": 80,
+  "llm_score": 80,
+  "score": 80,
+  "findings": [
+    {
+      "file": "src/cli.py",
+      "line": 3,
+      "severity": "medium",
+      "message": "D400: First line should end with a period",
+      "evidence": "pydocstyle D400"
+    },
+    {
+      "file": "src/middleware/circuit_breaker.py",
+      "line": 34,
+      "severity": "medium",
+      "message": "D107: Missing docstring in __init__",
+      "evidence": "pydocstyle D107"
+    },
+    {
+      "file": "src/middleware/circuit_breaker.py",
+      "line": 220,
+      "severity": "medium",
+      "message": "D401: First line should be in imperative mood",
+      "evidence": "pydocstyle D401"
+    }
+  ],
+  "tool_outputs": ".sessi-work/round_1/tools/documentation.txt",
+  "reconcile": "tool_first"
 }
