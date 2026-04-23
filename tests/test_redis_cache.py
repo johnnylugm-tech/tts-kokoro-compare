@@ -2,6 +2,7 @@
 
 import pytest
 import sys, os
+import redis
 from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
@@ -90,6 +91,93 @@ class TestRedisCacheAsync:
         cache = RedisCache(CacheConfig(enabled=False))
         result = await cache.clear()
         assert result == 0
+
+
+class TestRedisCacheConnected:
+    """Tests exercising the connected code path via mock Redis client."""
+
+    @pytest.mark.asyncio
+    async def test_get_returns_cached_bytes(self):
+        """get() returns cached audio bytes on cache hit."""
+        cache = RedisCache(CacheConfig(enabled=True, host="localhost", port=6379))
+        mock_client = MagicMock()
+        mock_client.get.return_value = b"cached_audio_data"
+        cache._client = mock_client
+        cache._connected = True
+        result = await cache.get("hello", "voice1", 1.0, "kokoro")
+        assert result == b"cached_audio_data"
+
+    @pytest.mark.asyncio
+    async def test_get_returns_none_on_miss(self):
+        """get() returns None on cache miss."""
+        cache = RedisCache(CacheConfig(enabled=True))
+        mock_client = MagicMock()
+        mock_client.get.return_value = None
+        cache._client = mock_client
+        cache._connected = True
+        result = await cache.get("hello", "voice1", 1.0, "kokoro")
+        assert result is None
+
+    @pytest.mark.asyncio
+    async def test_set_calls_redis_setex(self):
+        """set() stores audio with TTL via Redis SETEX."""
+        cache = RedisCache(CacheConfig(enabled=True, ttl=3600))
+        mock_client = MagicMock()
+        cache._client = mock_client
+        cache._connected = True
+        result = await cache.set("hello", "voice1", 1.0, "kokoro", b"audio_data")
+        assert result is True
+        mock_client.setex.assert_called_once()
+        call_args = mock_client.setex.call_args
+        assert call_args[0][1] == 3600  # TTL
+
+    @pytest.mark.asyncio
+    async def test_delete_removes_key(self):
+        """delete() removes the cached entry."""
+        cache = RedisCache(CacheConfig(enabled=True))
+        mock_client = MagicMock()
+        cache._client = mock_client
+        cache._connected = True
+        mock_client.delete.return_value = 1
+        result = await cache.delete("hello", "voice1", 1.0, "kokoro")
+        assert result == 1
+        mock_client.delete.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_clear_deletes_matching_keys(self):
+        """clear() deletes all keys matching the prefix pattern and returns count."""
+        cache = RedisCache(CacheConfig(enabled=True, prefix="test:"))
+        mock_client = MagicMock()
+        cache._client = mock_client
+        cache._connected = True
+        mock_client.scan_iter.return_value = ["test:key1", "test:key2"]
+        mock_client.delete.return_value = 2
+        result = await cache.clear()
+        assert result == 2
+        mock_client.scan_iter.assert_called_once_with(match="test:*")
+        mock_client.delete.assert_called_once_with("test:key1", "test:key2")
+
+    @pytest.mark.asyncio
+    async def test_get_handles_redis_error_gracefully(self):
+        """get() returns None on Redis error (fail-safe)."""
+        cache = RedisCache(CacheConfig(enabled=True))
+        mock_client = MagicMock()
+        mock_client.get.side_effect = redis.RedisError("connection lost")
+        cache._client = mock_client
+        cache._connected = True
+        result = await cache.get("hello", "voice1", 1.0, "kokoro")
+        assert result is None
+
+    @pytest.mark.asyncio
+    async def test_set_handles_redis_error_gracefully(self):
+        """set() returns False on Redis error (fail-safe)."""
+        cache = RedisCache(CacheConfig(enabled=True))
+        mock_client = MagicMock()
+        mock_client.setex.side_effect = redis.RedisError("connection lost")
+        cache._client = mock_client
+        cache._connected = True
+        result = await cache.set("hello", "voice1", 1.0, "kokoro", b"data")
+        assert result is False
 
 
 class TestGetCacheSingleton:
