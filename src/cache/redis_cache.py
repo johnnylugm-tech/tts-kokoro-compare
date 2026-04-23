@@ -206,7 +206,7 @@ def get_cache(config: "Optional[CacheConfig]" = None) -> RedisCache:
     Returns:
         RedisCache instance
     """
-    global _CACHE_INSTANCE
+    global _CACHE_INSTANCE  # pylint: disable=global-statement
     if _CACHE_INSTANCE is None:
         _CACHE_INSTANCE = RedisCache(config)
     return _CACHE_INSTANCE

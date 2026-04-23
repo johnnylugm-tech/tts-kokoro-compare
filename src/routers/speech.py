@@ -36,7 +36,7 @@ _linguistic_engine = TaiwanLinguisticEngine()
 
 def get_synthesis_engine() -> SynthesisEngine:
     """Get or create synthesis engine singleton."""
-    global _SYNTHESIS_ENGINE
+    global _SYNTHESIS_ENGINE  # pylint: disable=global-statement
     if _SYNTHESIS_ENGINE is None:
         _SYNTHESIS_ENGINE = SynthesisEngine()
     return _SYNTHESIS_ENGINE
@@ -44,7 +44,7 @@ def get_synthesis_engine() -> SynthesisEngine:
 
 def get_circuit_breaker() -> CircuitBreaker:
     """Get or create circuit breaker singleton."""
-    global _CIRCUIT_BREAKER
+    global _CIRCUIT_BREAKER  # pylint: disable=global-statement
     if _CIRCUIT_BREAKER is None:
         _CIRCUIT_BREAKER = CircuitBreaker(
             threshold=3,
@@ -55,7 +55,7 @@ def get_circuit_breaker() -> CircuitBreaker:
 
 def get_cache_instance() -> RedisCache:
     """Get or create cache singleton."""
-    global _CACHE
+    global _CACHE  # pylint: disable=global-statement
     if _CACHE is None:
         _CACHE = RedisCache(CacheConfig(enabled=False))  # Disabled by default
     return _CACHE
