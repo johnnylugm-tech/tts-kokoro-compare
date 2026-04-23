@@ -67,7 +67,7 @@ async def warmup_backend() -> bool:
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     """Application lifespan manager."""
-    global _SYNTHESIS_ENGINE
+    global _SYNTHESIS_ENGINE  # pylint: disable=global-statement
 
     logger.info("=" * 50)
     logger.info("Kokoro Taiwan Proxy starting...")
