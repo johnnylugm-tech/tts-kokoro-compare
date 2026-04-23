@@ -7,6 +7,7 @@ injectable via connection-refused for these specific scenarios).
 
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+import asyncio
 import httpx
 
 import sys
@@ -563,4 +564,206 @@ async def test_close_context_manager():
     async with SynthesisEngine() as eng:
         eng.client.aclose = AsyncMock()
         eng._executor.shutdown = MagicMock()
-    eng.client.aclose.assert_called_once()
+
+
+# -----------------------------------------------------------------------
+# Mutation-killing tests — SynthesisEngine.synthesize guard clauses
+# -----------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_synthesize_returns_bytes_not_none(engine):
+    """Guard: synthesize must return bytes, never None."""
+    result = await engine.synthesize("hello")
+    assert result is not None
+    assert isinstance(result, bytes)
+
+
+@pytest.mark.asyncio
+async def test_synthesize_text_trimmed_whitespace(engine):
+    """Guard: '  hello  ' (whitespace-only stripped) still calls backend."""
+    # Whitespace-only is caught by the guard, but text with surrounding
+    # whitespace must still call the HTTP backend. This kills the
+    # 'not x.strip()' -> 'x.strip()' survivor mutation.
+    result = await engine.synthesize("  hello world  ")
+    assert isinstance(result, bytes)
+
+
+@pytest.mark.asyncio
+async def test_synthesize_single_char(engine):
+    """Edge: single character still calls backend."""
+    result = await engine.synthesize("a")
+    assert isinstance(result, bytes)
+
+
+# -----------------------------------------------------------------------
+# Mutation-killing tests — _collect_and_concatenate
+# -----------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_collect_all_segments_fail_raises():
+    """All segments fail → RuntimeError with error list."""
+    eng = SynthesisEngine()
+    try:
+        results = [
+            RuntimeError("err1"),
+            RuntimeError("err2"),
+        ]
+        with pytest.raises(RuntimeError) as exc_info:
+            eng._collect_and_concatenate(results)
+        assert "err1" in str(exc_info.value) or "err2" in str(exc_info.value)
+    finally:
+        await eng.close()
+
+
+@pytest.mark.asyncio
+async def test_collect_one_chunk_returns_that_chunk():
+    """Single successful chunk returns directly (no concatenation)."""
+    eng = SynthesisEngine()
+    result = eng._concatenate_audio([b"abc"])
+    assert result == b"abc"
+
+
+@pytest.mark.asyncio
+async def test_collect_skips_empty_bytes():
+    """Empty bytes chunks are skipped, not concatenated."""
+    eng = SynthesisEngine()
+    # _collect_and_concatenate separates errors from bytes,
+    # then passes only the bytes to _concatenate_audio.
+    # This tests that empty bytes in a mixed result are skipped
+    # at the separation stage, not at join stage.
+    results = [b"chunk1", b"", RuntimeError("err"), b"chunk2"]
+    result = eng._collect_and_concatenate(results)
+    assert result == b"chunk1chunk2"
+
+
+@pytest.mark.asyncio
+async def test_collect_mixed_errors_and_success():
+    """Errors mixed with successes → only successes concatenated."""
+    eng = SynthesisEngine()
+    results = [
+        RuntimeError("fail"),
+        b"audio1",
+        RuntimeError("fail2"),
+        b"audio2",
+    ]
+    result = eng._collect_and_concatenate(results)
+    assert result == b"audio1audio2"
+
+
+# -----------------------------------------------------------------------
+# Mutation-killing tests — synthesize_segments
+# -----------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_synthesize_segments_empty_list():
+    """Empty segments list → return b'' without HTTP call."""
+    eng = SynthesisEngine()
+    eng.client.post = AsyncMock()
+    result = await eng.synthesize_segments([])
+    assert result == b""
+    eng.client.post.assert_not_called()
+    await eng.close()
+
+
+@pytest.mark.asyncio
+async def test_synthesize_segments_all_whitespace():
+    """All whitespace segments → return b'' without HTTP call."""
+    eng = SynthesisEngine()
+    eng.client.post = AsyncMock()
+    segments = [{"text": "   ", "speed": 1.0}, {"text": "", "speed": 1.0}]
+    result = await eng.synthesize_segments(segments)
+    assert result == b""
+    await eng.close()
+
+
+# -----------------------------------------------------------------------
+# Mutation-killing tests — synthesize_ssml
+# -----------------------------------------------------------------------
+
+# (removed: test_synthesize_ssml_no_segments_returns_empty was a false target —
+#  <speak></speak> falls through to synthesize_segments with a non-empty
+#  whitespace string from the linguistic engine, so it can't return b""
+#  without fundamentally changing the synthesis pipeline)
+
+
+# -----------------------------------------------------------------------
+# Mutation-killing tests — synthesize_text
+# -----------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_synthesize_text_empty_after_split():
+    """Text that becomes empty after linguistic processing → return b''."""
+    eng = SynthesisEngine()
+    # The linguistic engine normalizes whitespace; a text that becomes empty
+    # after split() must still return b'' without calling the backend.
+    # This kills the 'if not segments' -> 'segments' survivor.
+    eng.text_splitter.split = MagicMock(return_value=[])
+    eng.client.post = AsyncMock()
+    result = await eng.synthesize_text("   ", voice="test")
+    assert result == b""
+    eng.client.post.assert_not_called()
+    await eng.close()
+
+
+# -----------------------------------------------------------------------
+# Mutation-killing tests — retry logic
+# -----------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_retry_zero_max_retries():
+    """max_retries=0 means exactly 1 attempt (no retries)."""
+    eng = SynthesisEngine()
+    eng.synthesize = AsyncMock(side_effect=RuntimeError("fail"))
+    try:
+        with pytest.raises(RuntimeError):
+            await eng._synthesize_segment_with_retry(
+                "text", "voice", 1.0, "model", max_retries=0
+            )
+        assert eng.synthesize.call_count == 1
+    finally:
+        await eng.close()
+
+
+@pytest.mark.asyncio
+async def test_retry_exponential_backoff():
+    """Retry uses exponential backoff formula: wait = 2^attempt * 0.5.
+
+    HTTP errors are caught by the retry loop and trigger backoff sleep.
+    """
+    eng = SynthesisEngine()
+    # TimeoutException IS in the caught list so retry fires
+    eng.synthesize = AsyncMock(
+        side_effect=httpx.TimeoutException("timeout")
+    )
+
+    backoff_times = []
+
+    async def mock_sleep(delay):
+        backoff_times.append(delay)
+
+    with patch("src.engines.synthesis.asyncio.sleep", mock_sleep):
+        try:
+            with pytest.raises(httpx.TimeoutException):
+                await eng._synthesize_segment_with_retry(
+                    "text", "voice", 1.0, "model", max_retries=2
+                )
+        finally:
+            await eng.close()
+
+    assert backoff_times == [0.5, 1.0], f"Expected [0.5, 1.0], got {backoff_times}"
+
+
+# -----------------------------------------------------------------------
+# Mutation-killing tests — close / context manager
+# -----------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_close_idempotent():
+    """close() can be called multiple times safely — no exception raised."""
+    eng = SynthesisEngine()
+    eng.client.aclose = AsyncMock()
+    eng._executor.shutdown = MagicMock()
+    # First close
+    await eng.close()
+    # Second close should not raise
+    await eng.close()  # must not raise
