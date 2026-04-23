@@ -228,7 +228,7 @@ async def main_async(args: argparse.Namespace) -> int:
 
 
 
-def main() -> int:
+def main() -> int:  # pylint: disable=too-many-return-statements
     """Run the CLI entry point."""
     args = parse_args()
     return asyncio.run(main_async(args))

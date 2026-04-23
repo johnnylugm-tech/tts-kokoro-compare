@@ -76,7 +76,7 @@ class SSMLParser:
         return pattern.sub("", text)
 
     @staticmethod
-    def _parse_time_to_chars(time_str: str) -> str:
+    def _parse_time_to_chars(time_str: str) -> str:  # pylint: disable=too-many-return-statements
         """
         Convert SSML time attribute to pause characters.
 
@@ -220,7 +220,9 @@ class SSMLParser:
         return []
 
     @classmethod
-    def _dispatch_tag(cls, child, current_speed, default_speed, depth) -> List[SSMLSegment]:
+    def _dispatch_tag(  # pylint: disable=too-many-return-statements
+        cls, child, current_speed, default_speed, depth,
+    ) -> List[SSMLSegment]:
         """Dispatch to appropriate tag handler."""
         tag_lower = child.tag.lower()
         if tag_lower == "break":
@@ -238,7 +240,9 @@ class SSMLParser:
         return cls._handle_generic_tag(child, current_speed)
 
     @classmethod
-    def _process_element(cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0) -> List[SSMLSegment]:
+    def _process_element(  # pylint: disable=too-many-return-statements,line-too-long
+        cls, element: ET.Element, default_speed: float = 1.0, depth: int = 0,
+    ) -> List[SSMLSegment]:
         """Recursively process an XML element and its children."""
         segments: List[SSMLSegment] = []
         current_speed = default_speed
